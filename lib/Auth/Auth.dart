@@ -20,7 +20,8 @@ class Auth {
       Firestore.instance.collection('users');
 
   // Register a new account using an email and password
-  Future register(String name, String email, String password) async {
+  Future register(
+      String name, String email, String password, String photoUrl) async {
     try {
       sharedPreferences = await SharedPreferences.getInstance();
 
@@ -37,36 +38,27 @@ class Auth {
 
         final List<DocumentSnapshot> documents = result.documents;
 
-        // checking if it's a new user
-        if (documents.length == 0) {
-          // upload his data
-          await usersCollection.document(userId).setData({
-            'id': user.uid,
-            'name': name,
-            'email': email,
-            'photoUrl': user.photoUrl,
-          });
+        // upload his data
+        await usersCollection.document(user.uid).setData({
+          'id': user.uid,
+          'name': name,
+          'email': email,
+          'photoUrl': photoUrl,
+        });
 
-          // write it's data to local storage
-          currentUser = user;
-          await sharedPreferences.setString('id', currentUser.uid);
-          await sharedPreferences.setString('name', name);
-          await sharedPreferences.setString('email', currentUser.email);
-          await sharedPreferences.setString('photoUrl', currentUser.photoUrl);
+        // write it's data to local storage
+        currentUser = user;
+        await sharedPreferences.setString('id', currentUser.uid);
+        await sharedPreferences.setString('name', name);
+        await sharedPreferences.setString('email', currentUser.email);
+        await sharedPreferences.setString('photoUrl', photoUrl);
 
-          // this is just for testing
-          print(sharedPreferences.getString('id'));
-          print(sharedPreferences.getString('name'));
-          print(sharedPreferences.getString('email'));
-          print(sharedPreferences.getString('photoUrl'));
-        }
         // show this message if the register is successfull
         Fluttertoast.showToast(msg: 'Registered successfuly');
       }
       // return the current user into user from firebase function
       return _userFromFirebaseUser(user);
     } catch (e) {
-
       print(e.toString());
 
       // return this message if the regester faild
@@ -96,12 +88,6 @@ class Auth {
           await sharedPreferences.setString('name', currentUser.displayName);
           await sharedPreferences.setString('email', currentUser.email);
           await sharedPreferences.setString('photoUrl', currentUser.photoUrl);
-
-          // this is just for testing
-          print(sharedPreferences.getString('id'));
-          print(sharedPreferences.getString('name'));
-          print(sharedPreferences.getString('email'));
-          print(sharedPreferences.getString('photoUrl'));
         }
 
         // show this message if the register is successfull
@@ -109,9 +95,7 @@ class Auth {
       }
       return _userFromFirebaseUser(user);
     } catch (e) {
-
       print(e.toString());
-
       // return this message if the regester faild
       return Fluttertoast.showToast(msg: 'Registerd Faild : ${e.toString()}');
     }

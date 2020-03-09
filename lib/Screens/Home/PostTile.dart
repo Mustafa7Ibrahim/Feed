@@ -21,7 +21,7 @@ class PostTile extends StatelessWidget {
             ),
             SizedBox(height: 6),
             Text(
-              post.name,
+              post.userName,
               style: TextStyle(
                 fontSize: 16.0,
                 color: Colors.black,
@@ -31,7 +31,7 @@ class PostTile extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(12.0),
               child: Text(
-                post.content,
+                post.description,
                 style: TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.bold,
