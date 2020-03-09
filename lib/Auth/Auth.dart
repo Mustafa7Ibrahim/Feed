@@ -32,12 +32,6 @@ class Auth {
 
       FirebaseUser user = result.user;
       if (user != null) {
-        final QuerySnapshot result = await usersCollection
-            .where('id', isEqualTo: user.uid)
-            .getDocuments();
-
-        final List<DocumentSnapshot> documents = result.documents;
-
         // upload his data
         await usersCollection.document(user.uid).setData({
           'id': user.uid,
