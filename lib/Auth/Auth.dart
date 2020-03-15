@@ -1,117 +1,50 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:news_feed/models/User.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class Auth {
-  // a constructor of the class
-  Auth({this.userId});
+  String name;
+  String email;
+  String imageUrl;
+  String id;
 
   // uid String
-  final String userId;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  FirebaseUser currentUser;
-  SharedPreferences sharedPreferences;
+  Future<String> signInWithGoogleSignIn() async {
+    final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
+    final GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount.authentication;
 
-  // an instance of firestore
-  final CollectionReference usersCollection =
-      Firestore.instance.collection('users');
+    final AuthCredential credential = GoogleAuthProvider.getCredential(
+      accessToken: googleSignInAuthentication.accessToken,
+      idToken: googleSignInAuthentication.idToken,
+    );
 
-  // Register a new account using an email and password
-  Future register(
-      String name, String email, String password, String photoUrl) async {
-    try {
-      sharedPreferences = await SharedPreferences.getInstance();
+    final AuthResult authResult = await _auth.signInWithCredential(credential);
+    final FirebaseUser user = authResult.user;
 
-      AuthResult result = await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+    assert(user.displayName != null);
+    assert(user.email != null);
+    assert(user.photoUrl != null);
 
-      FirebaseUser user = result.user;
-      if (user != null) {
-        // upload his data
-        await usersCollection.document(user.uid).setData({
-          'id': user.uid,
-          'name': name,
-          'email': email,
-          'photoUrl': photoUrl,
-        });
+    name = user.displayName;
+    email = user.email;
+    imageUrl = user.photoUrl;
+    id = user.uid;
 
-        // write it's data to local storage
-        currentUser = user;
-        await sharedPreferences.setString('id', currentUser.uid);
-        await sharedPreferences.setString('name', name);
-        await sharedPreferences.setString('email', currentUser.email);
-        await sharedPreferences.setString('photoUrl', photoUrl);
+    assert(!user.isAnonymous);
+    assert(await user.getIdToken() != null);
 
-        // show this message if the register is successfull
-        Fluttertoast.showToast(msg: 'Registered successfuly');
-      }
-      // return the current user into user from firebase function
-      return _userFromFirebaseUser(user);
-    } catch (e) {
-      print(e.toString());
+    final FirebaseUser currentUser = await _auth.currentUser();
+    assert(user.uid == currentUser.uid);
 
-      // return this message if the regester faild
-      return Fluttertoast.showToast(msg: 'Registerd Faild : ${e.toString()}');
-    }
+    return 'signInWithGoogle succeeded: $user';
   }
 
-  // Sign in with email and password
-  Future signIn(String email, String password) async {
-    try {
-      AuthResult result = await _auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      FirebaseUser user = result.user;
+  void signOutGoogle() async {
+    await googleSignIn.signOut();
 
-      if (user != null) {
-        final QuerySnapshot result = await usersCollection
-            .where('id', isEqualTo: user.uid)
-            .getDocuments();
-        final List<DocumentSnapshot> documents = result.documents;
-
-        if (documents.length == 0) {
-          // write it's data to local storage
-          currentUser = user;
-          await sharedPreferences.setString('id', currentUser.uid);
-          await sharedPreferences.setString('name', currentUser.displayName);
-          await sharedPreferences.setString('email', currentUser.email);
-          await sharedPreferences.setString('photoUrl', currentUser.photoUrl);
-        }
-
-        // show this message if the register is successfull
-        Fluttertoast.showToast(msg: 'Sign in success');
-      }
-      return _userFromFirebaseUser(user);
-    } catch (e) {
-      print(e.toString());
-      // return this message if the regester faild
-      return Fluttertoast.showToast(msg: 'Registerd Faild : ${e.toString()}');
-    }
-  }
-
-  // create user object based on firebase User that come from register function
-  User _userFromFirebaseUser(FirebaseUser user) {
-    return user != null ? User(userId: user.uid) : null;
-  }
-
-  // auth chanage user stream
-  Stream<User> get user {
-    return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
-  }
-
-  // sign out method
-  Future signOut() async {
-    try {
-      return await _auth.signOut();
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
+    print("User Sign Out");
   }
 }

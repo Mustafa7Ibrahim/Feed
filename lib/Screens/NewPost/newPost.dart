@@ -1,24 +1,18 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:news_feed/models/Post.dart';
 
 class NewPost extends StatefulWidget {
-  // final String id;
-  // final String name;
-  // NewPost({@required this.id, @required this.name});
-
   @override
-  _NewPostState createState() => _NewPostState(
-      // id: id, name: name
-      );
+  _NewPostState createState() => _NewPostState();
 }
 
 class _NewPostState extends State<NewPost> {
-  // _NewPostState({@required this.id, @required this.name});
-
   final _formKey = GlobalKey<FormState>();
+  final Post post = Post();
+  FirebaseUser user;
 
   String newPost;
-  // String name;
-  // String id;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +25,7 @@ class _NewPostState extends State<NewPost> {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Text('username should show here'),
+              child: Text(user.displayName),
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
@@ -47,9 +41,7 @@ class _NewPostState extends State<NewPost> {
               ),
               color: Colors.blue,
               onPressed: () async {
-                // await postCollection.uploadPost(
-                //     content: newPost, name: userdata.name
-                //     );
+                await post.addNewPost(description: newPost);
               },
             )
           ],

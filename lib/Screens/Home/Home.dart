@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:news_feed/Auth/Auth.dart';
 import 'package:news_feed/Screens/Home/PostsList.dart';
 import 'package:news_feed/Screens/NewPost/newPost.dart';
-import 'package:news_feed/models/User.dart';
+import 'package:news_feed/models/Post.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
-  final User currentUser;
-  Home({this.currentUser});
   @override
   _HomeState createState() => _HomeState();
 }
@@ -14,35 +13,39 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   String name;
   Auth auth = Auth();
+  Post post = Post();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        title: Text('Feed'),
-        centerTitle: true,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.check_box_outline_blank),
-            onPressed: () => auth.signOut(),
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => NewPost(),
+    return StreamProvider.value(
+      value: Post().getPosts,
+          child: Scaffold(
+        appBar: AppBar(
+          elevation: 0.0,
+          title: Text('Feed'),
+          centerTitle: true,
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.check_box_outline_blank),
+              onPressed: () => auth..signOutGoogle(),
             ),
-          );
-        },
-        child: Icon(Icons.add, size: 35),
-        backgroundColor: Theme.of(context).primaryColor,
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => NewPost(),
+              ),
+            );
+          },
+          child: Icon(Icons.add, size: 35),
+          backgroundColor: Theme.of(context).primaryColor,
+        ),
+        backgroundColor: Colors.white,
+        body: PostsList(),
       ),
-      backgroundColor: Colors.white,
-      body: PostsList(),
     );
   }
 }

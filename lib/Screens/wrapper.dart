@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:news_feed/Auth/Auth.dart';
 import 'package:news_feed/Screens/Home/Home.dart';
-import 'package:news_feed/Screens/authencation/SignIn.dart';
-import 'package:news_feed/models/User.dart';
-import 'package:provider/provider.dart';
+import 'package:news_feed/Screens/SignIn.dart';
 
 class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
+    Auth auth = Auth();
 
-    if (user == null) {
+    if (auth.id == null) {
       return SignIn();
     } else {
       return Home();
