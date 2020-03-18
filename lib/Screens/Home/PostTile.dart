@@ -11,32 +11,24 @@ class PostTile extends StatelessWidget {
       padding: EdgeInsets.all(2.0),
       child: Card(
         elevation: 12.0,
-        // margin: EdgeInsets.fromLTRB(2.0, 2.0, 2.0, 2.0),
         child: Column(
           children: <Widget>[
             SizedBox(height: 20),
-            CircleAvatar(
-              backgroundColor: Colors.blue,
-              radius: 26.0,
-            ),
+            CircleAvatar(backgroundColor: Colors.blue, radius: 26.0),
             SizedBox(height: 6),
             Text(
               post.userName,
-              style: TextStyle(
-                fontSize: 16.0,
-                color: Colors.black,
-              ),
+              style: TextStyle(fontSize: 16.0, color: Colors.black),
             ),
             SizedBox(height: 12),
             Padding(
-              padding: const EdgeInsets.all(12.0),
+              padding: EdgeInsets.all(12.0),
               child: Text(
                 post.description,
                 style: TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
               ),
             ),
           ],

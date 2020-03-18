@@ -11,23 +11,21 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  String name;
   Auth auth = Auth();
-  Post post = Post();
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider.value(
+    return StreamProvider<List<Post>>.value(
       value: Post().getPosts,
-          child: Scaffold(
+      child: Scaffold(
         appBar: AppBar(
           elevation: 0.0,
-          title: Text('Feed'),
+          title: Text('News Feed'),
           centerTitle: true,
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.check_box_outline_blank),
-              onPressed: () => auth..signOutGoogle(),
+              onPressed: () => auth.signOutGoogle(),
             ),
           ],
         ),
@@ -35,15 +33,14 @@ class _HomeState extends State<Home> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (context) => NewPost(),
-              ),
+              MaterialPageRoute(builder: (context) => NewPost()),
             );
           },
           child: Icon(Icons.add, size: 35),
           backgroundColor: Theme.of(context).primaryColor,
         ),
         backgroundColor: Colors.white,
+        // the list of posts
         body: PostsList(),
       ),
     );

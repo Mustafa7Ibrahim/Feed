@@ -6,3 +6,4 @@ final CollectionReference userCollection =
 // this is the post collection
 final CollectionReference postCollection =
     Firestore.instance.collection('posts');
+

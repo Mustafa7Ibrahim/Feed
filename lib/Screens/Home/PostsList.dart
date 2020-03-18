@@ -4,7 +4,6 @@ import 'package:news_feed/models/Post.dart';
 import 'package:provider/provider.dart';
 
 class PostsList extends StatefulWidget {
-
   @override
   _PostsListState createState() => _PostsListState();
 }
@@ -12,11 +11,11 @@ class PostsList extends StatefulWidget {
 class _PostsListState extends State<PostsList> {
   @override
   Widget build(BuildContext context) {
-    final post = Provider.of<List<Post>>(context) ?? [];
+    final _post = Provider.of<List<Post>>(context) ?? [];
     return ListView.builder(
-      itemCount: post.length,
+      itemCount: _post.length ,
       itemBuilder: (context, index) {
-        return PostTile(post: post[index]);
+        return PostTile(post: _post[index]);
       },
     );
   }

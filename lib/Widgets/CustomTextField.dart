@@ -22,6 +22,8 @@ class CustomTextField extends StatelessWidget {
       padding: EdgeInsets.only(right: 24.0, left: 24.0),
       width: double.infinity,
       child: TextFormField(
+        maxLines: 14,
+        minLines: 1,
         onChanged: onSaved,
         validator: validator,
         obscureText: obsecure,

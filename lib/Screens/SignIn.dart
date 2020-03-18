@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_feed/Auth/Auth.dart';
-import 'package:news_feed/Screens/Home/Home.dart';
 
 class SignIn extends StatefulWidget {
-
   @override
   _SignInState createState() => _SignInState();
 }
@@ -34,10 +32,14 @@ class _SignInState extends State<SignIn> {
     return OutlineButton(
       splashColor: Colors.grey,
       onPressed: () {
-        auth.signInWithGoogleSignIn().whenComplete(() => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Home()),
-            ));
+        auth.signInWithGoogleSignIn()
+        // .whenComplete(
+        //       () => Navigator.push(
+        //         context,
+        //         MaterialPageRoute(builder: (context) => Home()),
+        //       ),
+            // )
+            ;
       },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
       highlightElevation: 0,

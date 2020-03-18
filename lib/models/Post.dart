@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:news_feed/Auth/Auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:news_feed/Constant/constant.dart';
-import 'package:news_feed/models/User.dart';
 import 'package:uuid/uuid.dart';
+
+final DateTime _dateTime = DateTime.now();
+final String gPostId = Uuid().v4();
 
 class Post {
   final String postId;
@@ -11,12 +13,7 @@ class Post {
   final String description;
   final String mediaUrl;
   final String userProfileImg;
-  final Timestamp timeStamp;
-
-  final DateTime timestamp = DateTime.now();
-  final String gPostId = Uuid().v4();
-  final Auth auth = Auth();
-  final User user = User();
+  final String timeStamp;
 
   Post({
     this.postId,
@@ -28,38 +25,39 @@ class Post {
     this.timeStamp,
   });
 
-  Post getPostData(DocumentSnapshot document) {
-    return Post(
-        postId: document['postId'],
-        ownerId: document['ownerId'],
-        userName: document['username'],
-        description: document['description'],
-        mediaUrl: document['mediaUrl'],
-        timeStamp: document['timeStamp'],
-        userProfileImg: document['userProfileImg']);
-  }
+  // Post getPostData(DocumentSnapshot document) {
+  //   return Post(
+  //       postId: document['postId'],
+  //       ownerId: document['ownerId'],
+  //       userName: document['username'],
+  //       description: document['description'],
+  //       mediaUrl: document['mediaUrl'],
+  //       timeStamp: document['timeStamp'],
+  //       userProfileImg: document['userProfileImg']);
+  // }
 
-  Stream<Post> get getpost {
-    return postCollection
-        .document(auth.id)
-        .collection('postCollection')
-        .document(postId)
-        .snapshots()
-        .map(getPostData);
-  }
+  // Stream<Post> get getpost {
+  //   return postCollection
+  //       .document(ownerId)
+  //       .collection('userPosts')
+  //       .document(postId)
+  //       .snapshots()
+  //       .map(getPostData);
+  // }
 
   Future addNewPost({String description, String mediaUrl}) async {
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
     return await postCollection
-        .document(auth.id)
-        .collection('postCollection')
+        .document(user.uid)
+        .collection('userPosts')
         .document(gPostId)
         .setData({
       'postId': gPostId,
-      'ownerId': auth.id,
-      'userName': user.name,
+      'ownerId': user.uid,
+      'userName': user.displayName,
       'description': description,
       'mediaUrl': mediaUrl,
-      'timeStamp': timeStamp,
+      'timeStamp': _dateTime,
       'userProfileImg': user.photoUrl,
     });
   }
@@ -67,18 +65,22 @@ class Post {
   List<Post> postsList(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       return Post(
-        postId: doc.data['postId'] ?? 'null',
-        ownerId: doc.data['ownerId'] ?? 'null',
-        userName: doc.data['userName'] ?? 'null',
-        description: doc.data['description'] ?? 'null',
-        userProfileImg: doc.data['userProfileImg'] ?? 'null',
-        mediaUrl: doc.data[mediaUrl] ?? 'null',
-        timeStamp: doc.data['timeStamp'] ?? 'null',
+        postId: doc.data['postId'],
+        ownerId: doc.data['ownerId'],
+        userName: doc.data['userName'],
+        description: doc.data['description'],
+        userProfileImg: doc.data['userProfileImg'],
+        mediaUrl: doc.data['mediaUrl'],
+        timeStamp: doc.data['timeStamp'],
       );
     }).toList();
   }
 
   Stream<List<Post>> get getPosts {
-    return postCollection.snapshots().map(postsList);
+    return postCollection
+        .document()
+        .collection('userPosts')
+        .snapshots()
+        .map(postsList);
   }
 }
