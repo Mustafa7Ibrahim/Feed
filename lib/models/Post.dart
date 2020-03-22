@@ -25,25 +25,25 @@ class Post {
     this.timeStamp,
   });
 
-  // Post getPostData(DocumentSnapshot document) {
-  //   return Post(
-  //       postId: document['postId'],
-  //       ownerId: document['ownerId'],
-  //       userName: document['username'],
-  //       description: document['description'],
-  //       mediaUrl: document['mediaUrl'],
-  //       timeStamp: document['timeStamp'],
-  //       userProfileImg: document['userProfileImg']);
-  // }
+  Post getPostData(DocumentSnapshot document) {
+    return Post(
+        postId: document['postId'],
+        ownerId: document['ownerId'],
+        userName: document['username'],
+        description: document['description'],
+        mediaUrl: document['mediaUrl'],
+        timeStamp: document['timeStamp'],
+        userProfileImg: document['userProfileImg']);
+  }
 
-  // Stream<Post> get getpost {
-  //   return postCollection
-  //       .document(ownerId)
-  //       .collection('userPosts')
-  //       .document(postId)
-  //       .snapshots()
-  //       .map(getPostData);
-  // }
+  Stream<Post> get getpost {
+    return postCollection
+        .document(ownerId)
+        .collection('userPosts')
+        .document(postId)
+        .snapshots()
+        .map(getPostData);
+  }
 
   Future addNewPost({String description, String mediaUrl}) async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();

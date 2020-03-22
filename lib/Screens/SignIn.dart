@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:news_feed/Auth/Auth.dart';
 
 class SignIn extends StatefulWidget {
@@ -8,23 +10,30 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
   Auth auth = Auth();
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              FlutterLogo(size: 150.0),
-              SizedBox(height: 50.0),
-              signInButton(context),
-            ],
-          ),
-        ),
-      ),
+      body: loading
+          ? Container(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    FlutterLogo(size: 150.0),
+                    SizedBox(height: 50.0),
+                    signInButton(context),
+                  ],
+                ),
+              ),
+            )
+          : Container(
+              child: Center(
+                child: SpinKitFoldingCube(color: Colors.blue, size: 24.0),
+              ),
+            ),
     );
   }
 
@@ -32,14 +41,11 @@ class _SignInState extends State<SignIn> {
     return OutlineButton(
       splashColor: Colors.grey,
       onPressed: () {
-        auth.signInWithGoogleSignIn()
-        // .whenComplete(
-        //       () => Navigator.push(
-        //         context,
-        //         MaterialPageRoute(builder: (context) => Home()),
-        //       ),
-            // )
-            ;
+        loading = true;
+        auth.signInWithGoogleSignIn().catchError(() {
+          loading = false;
+          Fluttertoast.showToast(msg: 'Sign In Faild');
+        }).whenComplete(() => loading = false);
       },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
       highlightElevation: 0,

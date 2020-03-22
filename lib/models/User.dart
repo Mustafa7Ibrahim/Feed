@@ -43,11 +43,13 @@ class User {
   // }
 
   User getCurrentUser(FirebaseUser user) {
-    return User(
-        userId: user.uid,
-        name: user.displayName,
-        photoUrl: user.photoUrl,
-        email: user.email);
+    return user != null
+        ? User(
+            userId: user.uid,
+            name: user.displayName,
+            photoUrl: user.photoUrl,
+            email: user.email)
+        : null;
   }
 
   Stream<User> get currentUser {

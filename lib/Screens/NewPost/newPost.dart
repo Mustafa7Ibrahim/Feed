@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:news_feed/models/Post.dart';
 import 'package:news_feed/models/User.dart';
 import 'package:provider/provider.dart';
@@ -23,42 +24,47 @@ class _NewPostState extends State<NewPost> {
   Widget build(BuildContext context) {
     final _user = Provider.of<User>(context);
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0.0,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
+          ),
+          onPressed: () => Navigator.pop(context),
+        ),
+        actions: <Widget>[
+          Container(
+            child: Row(
+              children: [
+                CircleAvatar(
+                  radius: 16.0,
+                  backgroundImage: NetworkImage(_user.photoUrl),
+                ),
+                SizedBox(width: 8.0),
+                Text(
+                  _user.name ?? 'null',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(width: 12.0),
+              ],
+            ),
+          )
+        ],
+      ),
       body: SafeArea(
         child: Form(
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 24.0,
-                  right: 24.0,
-                  top: 24.0,
-                  bottom: 12.0,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Align(
-                      child: Icon(Icons.arrow_back_ios),
-                      alignment: AlignmentDirectional.centerStart,
-                    ),
-                    Spacer(),
-                    CircleAvatar(
-                      radius: 16.0,
-                      backgroundImage: AssetImage('assets/back.jpg'),
-                    ),
-                    SizedBox(width: 8.0),
-                    Text(
-                      _user.name ?? 'null',
-                      style: TextStyle(
-                          fontSize: 16.0, fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 24.0),
+              SizedBox(height: 20.0),
               Text(
                 'ADD NEW POST',
                 style: TextStyle(
@@ -72,60 +78,45 @@ class _NewPostState extends State<NewPost> {
                     : Container(),
               ),
               Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(14.0),
                 child: TextFormField(
                   maxLines: 16,
-                  minLines: 1,
+                  minLines: 5,
+                  onChanged: (input) => setState(() => newPost = input),
                   decoration: InputDecoration(
                     hintText: 'Enter your Post',
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(45.0),
+                      borderRadius: BorderRadius.circular(12.0),
                       borderSide: BorderSide(
-                        color: Colors.blue,
-                        width: 3,
-                      ),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(45.0),
-                      borderSide: BorderSide(
-                        color: Colors.blue,
-                        width: 3,
-                      ),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(45.0),
-                      borderSide: BorderSide(
-                        color: Colors.red,
-                        width: 3,
-                      ),
-                    ),
-                    disabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(45.0),
-                      borderSide: BorderSide(
-                        color: Colors.red,
-                        width: 3,
+                        color: Colors.grey,
+                        width: 1,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(45.0),
+                      borderRadius: BorderRadius.circular(12.0),
                       borderSide: BorderSide(
-                        color: Colors.blue,
-                        width: 3,
+                        color: Colors.grey,
+                        width: 1,
                       ),
                     ),
                   ),
-                  onChanged: (input) => setState(() => newPost = input),
                 ),
               ),
               RaisedButton(
-                child: Text('Post', style: TextStyle(color: Colors.white)),
+                child: Text(
+                  'Post',
+                  style: TextStyle(color: Colors.white),
+                ),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
+                  borderRadius: BorderRadius.circular(8.0),
                 ),
-                color: Colors.blue,
-                onPressed: () async => await post.addNewPost(
-                  description: newPost,
-                ),
+                color: Colors.blueGrey,
+                onPressed: () async => await post
+                    .addNewPost(description: newPost)
+                    .whenComplete(() {
+                  Fluttertoast.showToast(msg: 'Post Add Sucsessful');
+                  Navigator.pop(context);
+                }),
               )
             ],
           ),
