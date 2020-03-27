@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:news_feed/Constant/constant.dart';
 
@@ -30,17 +31,13 @@ class User {
     });
   }
 
-  // User getUserData(DocumentSnapshot document) {
-  //   return User(
-  //       userId: document.data['id'],
-  //       email: document.data['email'],
-  //       name: document.data['name'],
-  //       photoUrl: document.data['photoUrl']);
-  // }
-
-  // Stream<User> get userData {
-  //   return userCollection.document(_auth.id).snapshots().map(getUserData);
-  // }
+  User getUserData(DocumentSnapshot document) {
+    return User(
+        userId: document.data['id'],
+        email: document.data['email'],
+        name: document.data['name'],
+        photoUrl: document.data['photoUrl'] ?? '');
+  }
 
   User getCurrentUser(FirebaseUser user) {
     return user != null

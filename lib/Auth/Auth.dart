@@ -1,5 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:news_feed/Screens/SignIn/SignIn.dart';
 import 'package:news_feed/models/User.dart';
 
 class Auth {
@@ -14,44 +18,72 @@ class Auth {
   final User _user = User();
 
   Future<User> signInWithGoogleSignIn() async {
-    final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
-    final GoogleSignInAuthentication googleSignInAuthentication =
-        await googleSignInAccount.authentication;
+    try {
+      final GoogleSignInAccount googleSignInAccount =
+          await googleSignIn.signIn().catchError((onError) {
+        print('onError');
+        Fluttertoast.showToast(
+            msg:
+                'Please Make sure that you have working conection to the internet.');
+      });
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount.authentication;
 
-    final AuthCredential credential = GoogleAuthProvider.getCredential(
-      accessToken: googleSignInAuthentication.accessToken,
-      idToken: googleSignInAuthentication.idToken,
-    );
+      final AuthCredential credential = GoogleAuthProvider.getCredential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
 
-    final AuthResult authResult = await _auth.signInWithCredential(credential);
-    final FirebaseUser user = authResult.user;
+      final AuthResult authResult =
+          await _auth.signInWithCredential(credential);
+      final FirebaseUser user = authResult.user;
 
-    assert(user.displayName != null);
-    assert(user.email != null);
-    assert(user.photoUrl != null);
+      assert(user.displayName != null);
+      assert(user.email != null);
+      assert(user.photoUrl != null);
 
-    final name = user.displayName;
-    final email = user.email;
-    final imageUrl = user.photoUrl;
-    final id = user.uid;
+      final name = user.displayName;
+      final email = user.email;
+      final imageUrl = user.photoUrl;
+      final id = user.uid;
 
-    _user.addNewUser(id, name, email, imageUrl);
+      _user.addNewUser(id, name, email, imageUrl);
 
-    print(name);
-    print(email);
+      print(name);
+      print(email);
 
-    assert(!user.isAnonymous);
-    assert(await user.getIdToken() != null);
+      assert(!user.isAnonymous);
+      assert(await user.getIdToken() != null);
 
-    final FirebaseUser currentUser = await _auth.currentUser();
-    assert(user.uid == currentUser.uid);
+      final FirebaseUser currentUser = await _auth.currentUser();
+      assert(user.uid == currentUser.uid);
 
-    return _user.getCurrentUser(currentUser);
+      return _user.getCurrentUser(currentUser);
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg:
+              'Please Make sure that you have working conection to the internet.');
+      return _user.getCurrentUser(null);
+    }
   }
 
-  void signOutGoogle() async {
-    await googleSignIn.signOut();
+  signOutGoogle(BuildContext context) async {
+    try {
+      await googleSignIn.signOut().catchError((onError) {
+        print(onError.toString());
+        Fluttertoast.showToast(msg: 'User Successfuly Signed Out');
+      }).whenComplete(
+        () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SignIn()),
+        ),
+      );
 
-    print("User Sign Out");
+      Fluttertoast.showToast(msg: 'User Successfuly Signed Out');
+
+      print("User Sign Out");
+    } catch (e) {
+      Fluttertoast.showToast(msg: 'Sign Out Failed, Please try agein');
+    }
   }
 }

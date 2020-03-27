@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:news_feed/Auth/Auth.dart';
 
 class SignIn extends StatefulWidget {
@@ -15,7 +14,7 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: loading
+      body: loading == false
           ? Container(
               child: Center(
                 child: Column(
@@ -42,10 +41,7 @@ class _SignInState extends State<SignIn> {
       splashColor: Colors.grey,
       onPressed: () {
         loading = true;
-        auth.signInWithGoogleSignIn().catchError(() {
-          loading = false;
-          Fluttertoast.showToast(msg: 'Sign In Faild');
-        }).whenComplete(() => loading = false);
+        auth.signInWithGoogleSignIn().whenComplete(() => loading = false);
       },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
       highlightElevation: 0,

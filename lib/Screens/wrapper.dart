@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:news_feed/Screens/Home/Home.dart';
-import 'package:news_feed/Screens/SignIn.dart';
+import 'package:news_feed/Screens/SignIn/SignIn.dart';
+import 'package:news_feed/Screens/WrapMain.dart';
 import 'package:news_feed/models/User.dart';
 import 'package:provider/provider.dart';
 
 class Wrapper extends StatelessWidget {
-  
   // this way when i  just use the nurmal way of google sign in
   // final GoogleSignIn googleSignIn = GoogleSignIn();
   // bool isLoaggedIn;
@@ -26,7 +25,7 @@ class Wrapper extends StatelessWidget {
     final user = Provider.of<User>(context);
     // checking if the user has already sign in
     if (user != null) {
-      return Home();
+      return WrapMainHome();
     } else {
       return SignIn();
     }
