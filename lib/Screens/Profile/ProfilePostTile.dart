@@ -7,15 +7,21 @@ import 'package:news_feed/models/Post.dart';
 import 'package:news_feed/Constant/constant.dart';
 import 'package:news_feed/models/User.dart';
 
-class ProfilePostTile extends StatelessWidget {
+class ProfilePostTile extends StatefulWidget {
   final Post post;
   final User user;
   ProfilePostTile({this.post, this.user});
+
+  @override
+  _ProfilePostTileState createState() => _ProfilePostTileState();
+}
+
+class _ProfilePostTileState extends State<ProfilePostTile> {
   bool maxLines = true;
 
   @override
   Widget build(BuildContext context) {
-    if (post.ownerId == user.userId) {
+    if (widget.post.ownerId == widget.user.userId) {
       return Container(
         color: forgroungColor,
         margin: EdgeInsets.only(top: 8.0),
@@ -28,14 +34,14 @@ class ProfilePostTile extends StatelessWidget {
                 children: <Widget>[
                   ListTile(
                     leading: CircleAvatar(
-                      backgroundImage: NetworkImage(post.userProfileImg),
+                      backgroundImage: NetworkImage(widget.post.userProfileImg),
                     ),
                     title: Text(
-                      post.userName,
+                      widget.post.userName,
                       style: TextStyle(color: textColor),
                     ),
                     subtitle: Text(
-                      post.timeStamp,
+                      widget.post.timeStamp,
                       style: TextStyle(color: textColor),
                     ),
                     onTap: () {
@@ -43,7 +49,7 @@ class ProfilePostTile extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  OpenProfile(postUserId: post.ownerId)));
+                                  OpenProfile(postUserId: widget.post.ownerId)));
                     },
                     trailing: IconButton(
                       icon: Icon(
@@ -55,11 +61,11 @@ class ProfilePostTile extends StatelessWidget {
                       },
                     ),
                   ),
-                  post.mediaUrl != null
+                  widget.post.mediaUrl != null
                       ? Padding(
                           padding: EdgeInsets.all(18.0),
                           child: Image.network(
-                            post.mediaUrl,
+                            widget.post.mediaUrl,
                             fit: BoxFit.cover,
                             loadingBuilder: (BuildContext context, Widget child,
                                 ImageChunkEvent loadingProgress) {
@@ -93,7 +99,7 @@ class ProfilePostTile extends StatelessWidget {
                       bottom: 16.0,
                     ),
                     child: Text(
-                      post.description,
+                      widget.post.description,
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -107,7 +113,7 @@ class ProfilePostTile extends StatelessWidget {
               ),
               onPressed: () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => OpenPost(post: post)),
+                MaterialPageRoute(builder: (context) => OpenPost(post: widget.post)),
               ),
             ),
             Row(
