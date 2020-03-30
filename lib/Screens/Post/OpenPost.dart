@@ -103,7 +103,7 @@ class _OpenPostState extends State<OpenPost> {
               //     style: TextStyle(fontSize: 16.0, color: textColor),
               //   ),
               // ),
-              buttons(),
+              // buttons(),
               addComment(),
               CommentsList(thisPost: widget.post),
             ],

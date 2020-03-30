@@ -42,8 +42,7 @@ class _CommentsListState extends State<CommentsList> {
             ),
           );
         }
-        if (snapshot.data['postId'] ==
-            (widget.thisPost.ownerId + widget.thisPost.timeStamp)) {
+        if (snapshot.data['postId'] == widget.thisPost.postId) {
           return ListView.builder(
             shrinkWrap: true,
             itemCount: snapshot.data.length,

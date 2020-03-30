@@ -9,11 +9,13 @@ class Post {
   final String mediaUrl;
   final String userProfileImg;
   final String timeStamp;
+  final String postId;
 
   DateTime _dateTime = DateTime.now();
 
   Post({
     this.ownerId,
+    this.postId,
     this.userName,
     this.description,
     this.mediaUrl,
@@ -42,6 +44,7 @@ class Post {
       'userName': user.displayName,
       'description': description,
       'mediaUrl': mediaUrl,
+      'postId': user.uid + _dateTime.toString(),
       'timeStamp': _dateTime.toString(),
       'userProfileImg': user.photoUrl,
     });

@@ -1,12 +1,10 @@
-import 'dart:convert';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:news_feed/Screens/SignIn/SignIn.dart';
-import 'package:news_feed/Screens/WrapMainHome.dart';
+import 'package:news_feed/Screens/Wrapper.dart';
 import 'package:news_feed/models/User.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -66,7 +64,7 @@ class Auth {
 
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => WrapMainHome()),
+        MaterialPageRoute(builder: (context) => Wrapper()),
       );
 
       return _user.getCurrentUser(currentUser);
