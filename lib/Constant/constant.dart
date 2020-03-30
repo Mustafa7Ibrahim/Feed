@@ -9,7 +9,10 @@ final CollectionReference userCollection =
 final CollectionReference postCollection =
     Firestore.instance.collection('posts');
 
-Color forgroungColor = Color.fromRGBO(18, 18, 18, 1.0);
+final CollectionReference commentsCollection =
+    Firestore.instance.collection('comments');
+
+Color forgroungColor = Color.fromRGBO(30, 30, 30, 1);
 // Color forgroungColor = Color.fromRGBO(30, 30, 30, 1.0);
 Color backgroundColor = Colors.black;
 

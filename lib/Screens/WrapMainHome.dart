@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:news_feed/Screens/AddNewPost/AddNewPost.dart';
-import 'package:news_feed/Screens/Settings/Settings.dart';
 import 'package:news_feed/Constant/constant.dart';
 
 import 'Home/Home.dart';
@@ -24,7 +23,7 @@ class _WrapMainHomeState extends State<WrapMainHome> {
     Chat(),
     AddNewPost(),
     Profile(),
-    Settings(),
+    // Settings(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -80,13 +79,13 @@ class _WrapMainHomeState extends State<WrapMainHome> {
                     textColor: textColor,
                     backgroundColor: profileColor,
                   ),
-                  GButton(
-                    icon: Icons.settings,
-                    text: 'Settings',
-                    textColor: textColor,
-                    iconColor: textColor,
-                    backgroundColor: settingsColor,
-                  ),
+                  // GButton(
+                  //   icon: Icons.settings,
+                  //   text: 'Settings',
+                  //   textColor: textColor,
+                  //   iconColor: textColor,
+                  //   backgroundColor: settingsColor,
+                  // ),
                 ],
                 selectedIndex: _selectedIndex,
                 onTabChange: (index) {

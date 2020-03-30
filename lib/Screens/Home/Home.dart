@@ -23,6 +23,9 @@ class _HomeState extends State<Home> {
           backgroundColor: backgroundColor,
           elevation: 0.0,
           title: Text('Home', style: TextStyle(color: textColor)),
+          leading: IconButton(
+              icon: Icon(Icons.remove_circle_outline, color: textColor),
+              onPressed: () => auth.signOutGoogle(context)),
 
           // FlatButton(
           //   child: CircleAvatar(

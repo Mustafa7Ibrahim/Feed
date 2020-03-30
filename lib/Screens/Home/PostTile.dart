@@ -53,8 +53,10 @@ class PostTile extends StatelessWidget {
                   ),
                 ),
                 post.mediaUrl != null
-                    ? Padding(
-                        padding: EdgeInsets.all(18.0),
+                    ? Container(
+                        margin: EdgeInsets.only(top: 8.0, bottom: 8.0),
+                        height: 300.0,
+                        width: double.infinity,
                         child: Image.network(
                           post.mediaUrl,
                           fit: BoxFit.cover,
@@ -91,7 +93,7 @@ class PostTile extends StatelessWidget {
                   ),
                   child: Text(
                     post.description,
-                    maxLines: 3,
+                    maxLines: 4,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontSize: 16.0,

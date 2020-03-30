@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:news_feed/Screens/SignIn/SignIn.dart';
+import 'package:news_feed/Screens/WrapMainHome.dart';
 import 'package:news_feed/models/User.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth {
   String name;
@@ -17,14 +21,14 @@ class Auth {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final User _user = User();
 
-  Future<User> signInWithGoogleSignIn() async {
+  Future<User> signInWithGoogleSignIn(BuildContext context) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
     try {
       final GoogleSignInAccount googleSignInAccount =
           await googleSignIn.signIn().catchError((onError) {
         print('onError');
         Fluttertoast.showToast(
-            msg:
-                'Please Make sure that you have working conection to the internet.');
+            msg: 'Please Make sure that you have working internet.');
       });
       final GoogleSignInAuthentication googleSignInAuthentication =
           await googleSignInAccount.authentication;
@@ -58,26 +62,35 @@ class Auth {
       final FirebaseUser currentUser = await _auth.currentUser();
       assert(user.uid == currentUser.uid);
 
+      preferences.setString('user', currentUser.displayName);
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => WrapMainHome()),
+      );
+
       return _user.getCurrentUser(currentUser);
     } catch (e) {
       Fluttertoast.showToast(
-          msg:
-              'Please Make sure that you have working conection to the internet.');
+          msg: 'Please Make sure that you have working internet.');
       return _user.getCurrentUser(null);
     }
   }
 
+  //sign out
   signOutGoogle(BuildContext context) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
     try {
       await googleSignIn.signOut().catchError((onError) {
         print(onError.toString());
-        Fluttertoast.showToast(msg: 'User Successfuly Signed Out');
-      }).whenComplete(
-        () => Navigator.push(
+        Fluttertoast.showToast(msg: 'User Unsuccessfuly Signed Out');
+      }).whenComplete(() {
+        preferences.remove('user');
+        Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => SignIn()),
-        ),
-      );
+        );
+      });
 
       Fluttertoast.showToast(msg: 'User Successfuly Signed Out');
 

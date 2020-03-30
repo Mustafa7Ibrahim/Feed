@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:news_feed/Auth/Auth.dart';
+import 'package:news_feed/Constant/constant.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -14,6 +15,7 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundColor,
       body: loading == false
           ? Container(
               child: Center(
@@ -41,7 +43,9 @@ class _SignInState extends State<SignIn> {
       splashColor: Colors.grey,
       onPressed: () {
         loading = true;
-        auth.signInWithGoogleSignIn().whenComplete(() => loading = false);
+        auth
+            .signInWithGoogleSignIn(context)
+            .whenComplete(() => loading = false);
       },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
       highlightElevation: 0,
