@@ -46,7 +46,7 @@ class _WrapperState extends State<Wrapper> {
             padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
             child: GNav(
                 gap: 8,
-                activeColor: textColor,
+                activeColor: whiteColor,
                 iconSize: 24,
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                 duration: Duration(milliseconds: 800),
@@ -54,38 +54,28 @@ class _WrapperState extends State<Wrapper> {
                   GButton(
                     icon: Icons.home,
                     text: 'Home',
-                    textColor: textColor,
-                    iconColor: textColor,
+                    textColor: whiteColor,
                     backgroundColor: homeColor,
                   ),
                   GButton(
                     icon: Icons.chat,
                     text: 'Chat',
-                    textColor: textColor,
-                    iconColor: textColor,
+                    textColor: whiteColor,
                     backgroundColor: chatColor,
                   ),
                   GButton(
                     icon: Icons.add,
-                    text: 'New Post',
-                    textColor: textColor,
-                    iconColor: textColor,
+                    text: 'Add',
+                    textColor: whiteColor,
                     backgroundColor: addPostColor,
                   ),
                   GButton(
                     icon: Icons.person,
-                    iconColor: textColor,
                     text: 'Profile',
-                    textColor: textColor,
+                    textColor: whiteColor,
                     backgroundColor: profileColor,
                   ),
-                  // GButton(
-                  //   icon: Icons.settings,
-                  //   text: 'Settings',
-                  //   textColor: textColor,
-                  //   iconColor: textColor,
-                  //   backgroundColor: settingsColor,
-                  // ),
+                
                 ],
                 selectedIndex: _selectedIndex,
                 onTabChange: (index) {

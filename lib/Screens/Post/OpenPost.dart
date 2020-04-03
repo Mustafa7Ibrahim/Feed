@@ -17,7 +17,6 @@ class OpenPost extends StatefulWidget {
 class _OpenPostState extends State<OpenPost> {
   Comment comments = Comment();
   bool showLoading = false;
-  final _key = GlobalKey<FormState>();
   String comment;
 
   @override
@@ -25,90 +24,105 @@ class _OpenPostState extends State<OpenPost> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          color: textColor,
-          onPressed: () => Navigator.pop(context),
-        ),
-        backgroundColor: backgroundColor,
+        backgroundColor: homeColor,
         elevation: 0.0,
         title: Text(
           widget.post.userName,
-          style: TextStyle(color: textColor),
+          style: TextStyle(color: whiteColor),
         ),
       ),
-      body: Container(
-        color: forgroungColor,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              // ListTile(
-              //   leading: CircleAvatar(
-              //     backgroundImage: NetworkImage(widget.post.userProfileImg),
-              //   ),
-              //   title: Text(
-              //     widget.post.userName,
-              //     style: TextStyle(color: textColor),
-              //   ),
-              //   subtitle: Text(
-              //     widget.post.timeStamp,
-              //     style: TextStyle(color: textColor),
-              //   ),
-              //   onTap: () {
-              //     // TODO add here to open user profile
-              //   },
-              //   trailing: IconButton(
-              //     icon: Icon(Icons.more_vert, color: textColor),
-              //     onPressed: () {
-              //       // TODO show more
-              //     },
-              //   ),
-              // ),
-              // widget.post.mediaUrl != null
-              //     ? Padding(
-              //         padding: EdgeInsets.all(18.0),
-              //         child: Image.network(
-              //           widget.post.mediaUrl,
-              //           loadingBuilder: (BuildContext context, Widget child,
-              //               ImageChunkEvent loadingProgress) {
-              //             if (loadingProgress == null) {
-              //               return child;
-              //             } else {
-              //               return Row(
-              //                 mainAxisAlignment: MainAxisAlignment.center,
-              //                 crossAxisAlignment: CrossAxisAlignment.center,
-              //                 children: <Widget>[
-              //                   SpinKitFoldingCube(
-              //                     color: profileColor,
-              //                     size: 18.0,
-              //                   ),
-              //                   SizedBox(width: 14.0),
-              //                   Text(
-              //                     'Loading Image...',
-              //                     style: TextStyle(color: textColor),
-              //                   ),
-              //                 ],
-              //               );
-              //             }
-              //           },
-              //         ),
-              //       )
-              //     : Container(),
-              // Container(
-              //   margin: EdgeInsets.all(14.0),
-              //   child: Text(
-              //     widget.post.description,
-              //     style: TextStyle(fontSize: 16.0, color: textColor),
-              //   ),
-              // ),
-              // buttons(),
-              addComment(),
-              CommentsList(thisPost: widget.post),
-            ],
+      body: Stack(
+        children: <Widget>[
+          SingleChildScrollView(
+            child: Container(
+              color: forgroungColor,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  ListTile(
+                    leading: CircleAvatar(
+                      backgroundImage: NetworkImage(widget.post.userProfileImg),
+                    ),
+                    title: Text(
+                      widget.post.userName,
+                      style: TextStyle(color: blackColor),
+                    ),
+                    subtitle: Text(
+                      widget.post.timeStamp,
+                      style: TextStyle(color: blackColor),
+                    ),
+                    onTap: () {
+                      // TODO add here to open user profile
+                    },
+                    trailing: IconButton(
+                      icon: Icon(Icons.more_vert, color: blackColor),
+                      onPressed: () {
+                        // TODO show more
+                      },
+                    ),
+                  ),
+                  widget.post.mediaUrl != null
+                      ? Hero(
+                          tag: 'postPhoto',
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 4.0, bottom: 4.0),
+                            child: SizedBox(
+                              height: 400.0,
+                              width: double.infinity,
+                              child: Image.network(
+                                widget.post.mediaUrl,
+                                fit: BoxFit.fitWidth,
+                                loadingBuilder: (
+                                  BuildContext context,
+                                  Widget child,
+                                  ImageChunkEvent loadingProgress,
+                                ) {
+                                  if (loadingProgress == null) {
+                                    return child;
+                                  } else {
+                                    return Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        SpinKitFoldingCube(
+                                          color: homeColor,
+                                          size: 18.0,
+                                        ),
+                                        SizedBox(width: 14.0),
+                                        Text(
+                                          'Loading Image...',
+                                          style: TextStyle(color: blackColor),
+                                        ),
+                                      ],
+                                    );
+                                  }
+                                },
+                              ),
+                            ),
+                          ),
+                        )
+                      : Container(),
+                  Container(
+                      margin: EdgeInsets.all(14.0),
+                      child: Text(
+                        widget.post.description,
+                        style: TextStyle(fontSize: 16.0, color: blackColor),
+                      ),
+                    ),
+                  buttons(),
+                  Container(
+                    color: backgroundColor,
+                    height: MediaQuery.of(context).size.height * 0.2,
+                  ),
+                ],
+              ),
+            ),
           ),
-        ),
+          commentsSection(),
+        ],
       ),
     );
   }
@@ -120,7 +134,7 @@ class _OpenPostState extends State<OpenPost> {
           Expanded(
             flex: 1,
             child: IconButton(
-              icon: Icon(LineIcons.thumbs_o_up, color: textColor),
+              icon: Icon(LineIcons.thumbs_o_up, color: blackColor),
               onPressed: () {
                 // TODO increase the like number
               },
@@ -129,10 +143,8 @@ class _OpenPostState extends State<OpenPost> {
           Expanded(
             flex: 1,
             child: IconButton(
-              icon: Icon(LineIcons.comments_o, color: textColor),
-              onPressed: () {
-                // TODO add new Comment
-              },
+              icon: Icon(LineIcons.comments_o, color: blackColor),
+              onPressed: () async {},
             ),
           )
         ],
@@ -140,69 +152,19 @@ class _OpenPostState extends State<OpenPost> {
     );
   }
 
-  addComment() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Expanded(
-          flex: 5,
-          child: Form(
-            key: _key,
-            child: Container(
-              height: 60.0,
-              child: TextFormField(
-                minLines: 1,
-                initialValue: null,
-                cursorColor: addPostColor,
-                style: TextStyle(color: textColor),
-                keyboardType: TextInputType.multiline,
-                onChanged: (input) => setState(() => comment = input),
-                decoration: InputDecoration(
-                  hintText: 'Enter your Comment',
-                  hintStyle: TextStyle(color: grayColor),
-                  fillColor: forgroungColor,
-                  filled: true,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(24.0),
-                    borderSide: BorderSide(color: addPostColor, width: 2),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(24.0),
-                    borderSide: BorderSide(color: addPostColor, width: 2),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-        Expanded(
-          flex: 1,
-          child: Container(
-            height: 60.0,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(24.0),
-              color: addPostColor,
-            ),
-            child: IconButton(
-              icon: showLoading == false
-                  ? Icon(Icons.send)
-                  : SpinKitFadingCircle(color: textColor),
-              color: textColor,
-              onPressed: () async {
-                setState(() => showLoading = true);
-                await comments.addNewComment(
-                  postId: widget.post.ownerId + widget.post.timeStamp,
-                  comment: comment,
-                ).then((done) {
-                  setState(() => showLoading = false);
-                  _key.currentState.reset();
-                });
-              },
-            ),
-          ),
-        )
-      ],
+  commentsSection() {
+    return SizedBox.expand(
+      child: DraggableScrollableSheet(
+        minChildSize: 0.2,
+        maxChildSize: 1.0,
+        initialChildSize: 0.2,
+        builder: (context, scrollController) {
+          return CommentsList(
+            thisPost: widget.post,
+            scrollController: scrollController,
+          );
+        },
+      ),
     );
   }
 }

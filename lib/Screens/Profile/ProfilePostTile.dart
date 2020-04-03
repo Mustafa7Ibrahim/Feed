@@ -21,7 +21,7 @@ class _ProfilePostTileState extends State<ProfilePostTile> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.post.ownerId == widget.user.userId) {
+    if (widget.post.ownerId == widget?.user?.userId ?? '') {
       return Container(
         color: forgroungColor,
         margin: EdgeInsets.only(top: 8.0),
@@ -34,27 +34,30 @@ class _ProfilePostTileState extends State<ProfilePostTile> {
                 children: <Widget>[
                   ListTile(
                     leading: CircleAvatar(
-                      backgroundImage: NetworkImage(widget.post.userProfileImg),
+                      backgroundImage: NetworkImage(
+                        widget?.post?.userProfileImg ??
+                            'https://fakeimg.pl/350x200/?text=World&font=lobster',
+                      ),
                     ),
                     title: Text(
                       widget.post.userName,
-                      style: TextStyle(color: textColor),
+                      style: TextStyle(color: blackColor),
                     ),
                     subtitle: Text(
                       widget.post.timeStamp,
-                      style: TextStyle(color: textColor),
+                      style: TextStyle(color: blackColor),
                     ),
                     onTap: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  OpenProfile(postUserId: widget.post.ownerId)));
+                              builder: (context) => OpenProfile(
+                                  postUserId: widget.post.ownerId)));
                     },
                     trailing: IconButton(
                       icon: Icon(
                         Icons.more_vert,
-                        color: textColor,
+                        color: blackColor,
                       ),
                       onPressed: () {
                         // TODO show more
@@ -83,7 +86,7 @@ class _ProfilePostTileState extends State<ProfilePostTile> {
                                     SizedBox(width: 14.0),
                                     Text(
                                       'Loading Image...',
-                                      style: TextStyle(color: textColor),
+                                      style: TextStyle(color: blackColor),
                                     ),
                                   ],
                                 );
@@ -105,7 +108,7 @@ class _ProfilePostTileState extends State<ProfilePostTile> {
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.normal,
-                        color: textColor,
+                        color: blackColor,
                       ),
                     ),
                   ),
@@ -113,7 +116,8 @@ class _ProfilePostTileState extends State<ProfilePostTile> {
               ),
               onPressed: () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => OpenPost(post: widget.post)),
+                MaterialPageRoute(
+                    builder: (context) => OpenPost(post: widget.post)),
               ),
             ),
             Row(
@@ -123,7 +127,7 @@ class _ProfilePostTileState extends State<ProfilePostTile> {
                   child: IconButton(
                     icon: Icon(
                       LineIcons.thumbs_o_up,
-                      color: textColor,
+                      color: blackColor,
                     ),
                     onPressed: () {
                       // TODO increase the like number
@@ -135,7 +139,7 @@ class _ProfilePostTileState extends State<ProfilePostTile> {
                   child: IconButton(
                     icon: Icon(
                       LineIcons.comments_o,
-                      color: textColor,
+                      color: blackColor,
                     ),
                     onPressed: () {
                       // TODO add new Comment

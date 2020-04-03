@@ -29,59 +29,61 @@ class PostTile extends StatelessWidget {
                   ),
                   title: Text(
                     post.userName,
-                    style: TextStyle(color: textColor),
+                    style: TextStyle(color: blackColor),
                   ),
                   subtitle: Text(
                     post.timeStamp,
-                    style: TextStyle(color: textColor),
+                    style: TextStyle(color: blackColor),
                   ),
                   onTap: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                OpenProfile(postUserId: post.ownerId)));
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            OpenProfile(postUserId: post.ownerId),
+                      ),
+                    );
                   },
                   trailing: IconButton(
-                    icon: Icon(
-                      Icons.more_vert,
-                      color: textColor,
-                    ),
+                    icon: Icon(Icons.more_vert, color: blackColor),
                     onPressed: () {
                       // TODO show more
                     },
                   ),
                 ),
                 post.mediaUrl != null
-                    ? Container(
-                        margin: EdgeInsets.only(top: 8.0, bottom: 8.0),
-                        height: 300.0,
-                        width: double.infinity,
-                        child: Image.network(
-                          post.mediaUrl,
-                          fit: BoxFit.cover,
-                          loadingBuilder: (BuildContext context, Widget child,
-                              ImageChunkEvent loadingProgress) {
-                            if (loadingProgress == null) {
-                              return child;
-                            } else {
-                              return Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  SpinKitFoldingCube(
-                                    color: homeColor,
-                                    size: 18.0,
-                                  ),
-                                  SizedBox(width: 14.0),
-                                  Text(
-                                    'Loading Image...',
-                                    style: TextStyle(color: textColor),
-                                  ),
-                                ],
-                              );
-                            }
-                          },
+                    ? Hero(
+                        tag: 'postPhoto',
+                        child: Container(
+                          margin: EdgeInsets.only(top: 8.0, bottom: 8.0),
+                          height: 300.0,
+                          width: double.infinity,
+                          child: Image.network(
+                            post.mediaUrl,
+                            fit: BoxFit.cover,
+                            loadingBuilder: (BuildContext context, Widget child,
+                                ImageChunkEvent loadingProgress) {
+                              if (loadingProgress == null) {
+                                return child;
+                              } else {
+                                return Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    SpinKitFoldingCube(
+                                      color: homeColor,
+                                      size: 18.0,
+                                    ),
+                                    SizedBox(width: 14.0),
+                                    Text(
+                                      'Loading Image...',
+                                      style: TextStyle(color: blackColor),
+                                    ),
+                                  ],
+                                );
+                              }
+                            },
+                          ),
                         ),
                       )
                     : Container(),
@@ -98,7 +100,7 @@ class PostTile extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.normal,
-                      color: textColor,
+                      color: blackColor,
                     ),
                   ),
                 ),
@@ -114,7 +116,7 @@ class PostTile extends StatelessWidget {
                 child: IconButton(
                   icon: Icon(
                     LineIcons.thumbs_o_up,
-                    color: textColor,
+                    color: blackColor,
                   ),
                   onPressed: () {
                     // TODO increase the like number
@@ -126,7 +128,7 @@ class PostTile extends StatelessWidget {
                 child: IconButton(
                   icon: Icon(
                     LineIcons.comments_o,
-                    color: textColor,
+                    color: blackColor,
                   ),
                   onPressed: () {
                     // TODO add new Comment

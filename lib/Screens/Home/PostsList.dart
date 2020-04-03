@@ -9,11 +9,12 @@ class PostsList extends StatefulWidget {
 }
 
 class _PostsListState extends State<PostsList> {
+
+  
   @override
   Widget build(BuildContext context) {
     final _post = Provider.of<List<Post>>(context) ?? [];
     return ListView.builder(
-      
       itemCount: _post.length,
       itemBuilder: (context, index) {
         return PostTile(post: _post[index]);

@@ -9,33 +9,19 @@ class Post {
   final String mediaUrl;
   final String userProfileImg;
   final String timeStamp;
-  final String postId;
+  final postId;
 
   DateTime _dateTime = DateTime.now();
 
   Post({
     this.ownerId,
-    this.postId,
     this.userName,
     this.description,
     this.mediaUrl,
     this.userProfileImg,
     this.timeStamp,
+    this.postId,
   });
-
-  // Post getPostData(DocumentSnapshot document) {
-  //   return Post(
-  //       ownerId: document['ownerId'],
-  //       userName: document['username'],
-  //       description: document['description'],
-  //       mediaUrl: document['mediaUrl'],
-  //       timeStamp: document['timeStamp'],
-  //       userProfileImg: document['userProfileImg']);
-  // }
-
-  // Stream<Post> get getpost {
-  //   return postCollection.document(ownerId).snapshots().map(getPostData);
-  // }
 
   Future addNewPost({String description, String mediaUrl}) async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
@@ -44,7 +30,6 @@ class Post {
       'userName': user.displayName,
       'description': description,
       'mediaUrl': mediaUrl,
-      'postId': user.uid + _dateTime.toString(),
       'timeStamp': _dateTime.toString(),
       'userProfileImg': user.photoUrl,
     });
@@ -53,6 +38,7 @@ class Post {
   List<Post> postsList(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       return Post(
+        postId: doc.documentID,
         ownerId: doc.data['ownerId'],
         userName: doc.data['userName'],
         description: doc.data['description'],

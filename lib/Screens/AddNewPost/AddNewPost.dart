@@ -42,15 +42,15 @@ class _AddNewPostState extends State<AddNewPost> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: forgroungColor,
       appBar: AppBar(
-        backgroundColor: backgroundColor,
+        backgroundColor: addPostColor,
         elevation: 0.0,
         centerTitle: true,
         title: Text(
           'ADD NEW POST',
           style: TextStyle(
-            color: textColor,
+            color: whiteColor,
             fontWeight: FontWeight.bold,
             fontSize: 20.0,
           ),
@@ -71,26 +71,26 @@ class _AddNewPostState extends State<AddNewPost> {
                     maxLines: 8,
                     minLines: 5,
                     cursorColor: addPostColor,
-                    style: TextStyle(color: textColor),
+                    style: TextStyle(color: blackColor),
                     keyboardType: TextInputType.multiline,
                     onChanged: (input) => setState(() => newPost = input),
                     decoration: InputDecoration(
                       hintText: 'Enter your Post',
-                      hintStyle: TextStyle(color: grayColor),
+                      hintStyle: TextStyle(color: blackColor),
                       fillColor: forgroungColor,
                       filled: true,
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12.0),
                         borderSide: BorderSide(
-                          color: forgroungColor,
-                          width: 3,
+                          color: addPostColor,
+                          width: 2,
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12.0),
                         borderSide: BorderSide(
-                          color: forgroungColor,
-                          width: 3,
+                          color: addPostColor,
+                          width: 2,
                         ),
                       ),
                     ),
@@ -106,7 +106,7 @@ class _AddNewPostState extends State<AddNewPost> {
         backgroundColor: addPostColor,
         child: showLoadingPost == false
             ? Icon(Icons.add)
-            : SpinKitFoldingCube(color: textColor, size: 12.0),
+            : SpinKitFoldingCube(color: blackColor, size: 12.0),
         isExtended: true,
         onPressed: () async {
           if (newPost != null) {
@@ -144,13 +144,16 @@ class _AddNewPostState extends State<AddNewPost> {
         children: [
           CircleAvatar(
             radius: 16.0,
-            backgroundImage: NetworkImage(_user.photoUrl),
+            backgroundImage: NetworkImage(
+              _user?.photoUrl ??
+                  'https://fakeimg.pl/350x200/?text=World&font=lobster',
+            ),
           ),
           SizedBox(width: 8.0),
           Text(
-            _user.name ?? 'null',
+            _user?.name ?? 'User Name',
             style: TextStyle(
-              color: textColor,
+              color: blackColor,
               fontSize: 16.0,
               fontWeight: FontWeight.bold,
             ),
@@ -179,11 +182,11 @@ class _AddNewPostState extends State<AddNewPost> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          Icon(Icons.add, color: textColor),
+                          Icon(Icons.add, color: blackColor),
                           SizedBox(width: 4.0),
                           Text(
                             'Add Photo',
-                            style: TextStyle(color: textColor),
+                            style: TextStyle(color: blackColor),
                           ),
                         ],
                       )

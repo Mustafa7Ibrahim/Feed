@@ -17,20 +17,21 @@ class _OpenProfileState extends State<OpenProfile> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User>(
-        stream: userCollection
-            .document(widget.postUserId)
-            .snapshots()
-            .map(_user.getUserData),
-        builder: (context, snapshot) {
-          return Scaffold(
-            backgroundColor: forgroungColor,
-            body: SafeArea(
-              child: Center(
-                child: userInfo(context, snapshot),
-              ),
+      stream: userCollection
+          .document(widget.postUserId)
+          .snapshots()
+          .map(_user.getUserData),
+      builder: (context, snapshot) {
+        return Scaffold(
+          backgroundColor: forgroungColor,
+          body: SafeArea(
+            child: Center(
+              child: userInfo(context, snapshot),
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 
   Widget userInfo(BuildContext context, AsyncSnapshot snapshot) {
@@ -109,7 +110,6 @@ class _OpenProfileState extends State<OpenProfile> {
             ),
           ],
         ),
-        
       ],
     );
   }

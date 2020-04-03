@@ -15,56 +15,61 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  ScrollController controller = ScrollController();
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: User().currentUser,
-      builder: (context, snapshot) {
-        return Scaffold(
-          backgroundColor: backgroundColor,
-          body: SafeArea(
-            child: Column(
-              children: <Widget>[
-                userInfo(context),
-                SizedBox(height: 12.0),
-                userPosts(context),
-              ],
-            ),
-          ),
-        );
-      },
+    return Scaffold(
+      backgroundColor: forgroungColor,
+      body: SafeArea(
+        child: ListView(
+          controller: controller,
+          children: <Widget>[
+            userInfo(context),
+            userPosts(context),
+          ],
+        ),
+      ),
     );
   }
 
   userInfo(BuildContext context) {
-    final user = Provider.of<User>(context);
+    final user = Provider.of<User>(context) ?? null;
     return Column(
       children: <Widget>[
+        SizedBox(height: 18.0),
         Center(
           child: SizedBox(
             height: 75.0,
             width: 75.0,
             child: CircleAvatar(
-                backgroundImage: NetworkImage(user.photoUrl), radius: 24.0,),
+              backgroundImage: NetworkImage(
+                user?.photoUrl ??
+                    'https://fakeimg.pl/350x200/?text=World&font=lobster',
+              ),
+              radius: 24.0,
+            ),
           ),
         ),
         SizedBox(height: 14.0),
         Center(
           child: Text(
-            user.name,
+            user?.name ?? '',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 22.0,
-              color: textColor,
+              color: blackColor,
             ),
           ),
         ),
         SizedBox(height: 12.0),
         Center(
           child: Text(
-            user.email,
+            user?.email ?? '',
             style: TextStyle(
-                fontWeight: FontWeight.w300, fontSize: 14.0, color: textColor),
+              fontWeight: FontWeight.w300,
+              fontSize: 14.0,
+              color: blackColor,
+            ),
           ),
         ),
         SizedBox(height: 16.0),
@@ -74,11 +79,11 @@ class _ProfileState extends State<Profile> {
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12.0),
-                color: forgroungColor,
+                color: backgroundColor,
               ),
               child: IconButton(
                 color: Colors.green[300],
-                icon: Icon(LineIcons.comments_o),
+                icon: Icon(Icons.chat_bubble_outline),
                 onPressed: () {
                   //TODO send message
                 },
@@ -88,7 +93,7 @@ class _ProfileState extends State<Profile> {
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(18.0),
-                color: forgroungColor,
+                color: backgroundColor,
               ),
               child: IconButton(
                 color: Colors.blueAccent,
@@ -102,7 +107,7 @@ class _ProfileState extends State<Profile> {
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(18.0),
-                color: forgroungColor,
+                color: backgroundColor,
               ),
               child: IconButton(
                 color: Colors.blue,
@@ -120,22 +125,22 @@ class _ProfileState extends State<Profile> {
 
   userPosts(BuildContext context) {
     final user = Provider.of<User>(context);
-    return Expanded(
-      child: StreamBuilder(
-        stream: Post().getPosts,
-        builder: (context, snapshot) {
-          return ListView.builder(
-            shrinkWrap: true,
-            itemCount: snapshot?.data?.length ?? 0,
-            itemBuilder: (context, index) {
-              return ProfilePostTile(
-                post: snapshot.data[index],
-                user: user,
-              );
-            },
-          );
-        },
-      ),
+    final post = Provider.of<List<Post>>(context);
+    return StreamBuilder(
+      stream: Post().getPosts,
+      builder: (context, snapshot) {
+        return ListView.builder(
+          controller: controller,
+          shrinkWrap: true,
+          itemCount: post.length,
+          itemBuilder: (context, index) {
+            return ProfilePostTile(
+              post: post[index],
+              user: user,
+            );
+          },
+        );
+      },
     );
   }
 }

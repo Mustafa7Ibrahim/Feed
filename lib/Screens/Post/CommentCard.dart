@@ -8,30 +8,41 @@ class CommentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Card(
-          elevation: 8.0,
-          child: ListTile(
+    return Card(
+      color: forgroungColor,
+      margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+      elevation: 0.0,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          ListTile(
             title: Text(
               comment.name,
-              style: TextStyle(color: textColor),
-            ),
-            subtitle: Text(
-              comment.timeStamp,
-              style: TextStyle(color: textColor),
+              style: TextStyle(
+                color: blackColor,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             leading: CircleAvatar(
               backgroundImage: NetworkImage(comment.userImageUrl),
-              radius: 24.0,
+              radius: 18.0,
+            ),
+            trailing: Text(
+              comment.timeStamp,
+              style: TextStyle(color: blackColor),
+            ),
+            dense: true,
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 70.0, right: 66.0),
+            child: Text(
+              comment.comment,
+              style: TextStyle(color: blackColor, fontSize: 15.0),
             ),
           ),
-        ),
-        Text(
-          comment.comment,
-          style: TextStyle(color: textColor),
-        ),
-      ],
+          Divider(color: homeColor),
+        ],
+      ),
     );
   }
 }
