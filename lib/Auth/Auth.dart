@@ -23,11 +23,11 @@ class Auth {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     try {
       final GoogleSignInAccount googleSignInAccount =
-          await googleSignIn.signIn().catchError((onError) {
-        print('onError');
-        Fluttertoast.showToast(
-            msg: 'Please Make sure that you have working internet.');
-      });
+          await googleSignIn.signIn().catchError(
+                (onError) => Fluttertoast.showToast(
+                  msg: 'Please Make sure that you have working internet.',
+                ),
+              );
       final GoogleSignInAuthentication googleSignInAuthentication =
           await googleSignInAccount.authentication;
 
@@ -38,6 +38,7 @@ class Auth {
 
       final AuthResult authResult =
           await _auth.signInWithCredential(credential);
+
       final FirebaseUser user = authResult.user;
 
       assert(user.displayName != null);
@@ -62,7 +63,7 @@ class Auth {
 
       preferences.setString('user', currentUser.displayName);
 
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => Wrapper()),
       );
@@ -70,7 +71,8 @@ class Auth {
       return _user.getCurrentUser(currentUser);
     } catch (e) {
       Fluttertoast.showToast(
-          msg: 'Please Make sure that you have working internet.');
+        msg: 'Please Make sure that you have working internet.',
+      );
       return _user.getCurrentUser(null);
     }
   }
@@ -84,7 +86,7 @@ class Auth {
         Fluttertoast.showToast(msg: 'User Unsuccessfuly Signed Out');
       }).whenComplete(() {
         preferences.remove('user');
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => SignIn()),
         );

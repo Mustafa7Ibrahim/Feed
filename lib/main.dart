@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'models/Post.dart';
+import 'utilts/theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,6 +22,7 @@ Future<void> main() async {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
+        theme: theme,
         home: user == null ? SignIn() : Wrapper(),
       ),
     ),

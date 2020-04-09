@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:line_icons/line_icons.dart';
-import 'package:news_feed/Screens/OpenProfile/OpenProfile.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:news_feed/Screens/Post/OpenPost.dart';
-import 'package:news_feed/Constant/constant.dart';
-
+import 'package:news_feed/Screens/Profile/profile.dart';
 import 'package:news_feed/models/Post.dart';
+import 'package:news_feed/widgets/post_image.dart';
 
 class PostTile extends StatelessWidget {
   final Post post;
@@ -13,132 +11,111 @@ class PostTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: forgroungColor,
-      margin: EdgeInsets.only(top: 8.0),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        ListTile(
+          leading: CircleAvatar(
+            backgroundImage: NetworkImage(post.userProfileImg),
+          ),
+          title: Text(post.userName),
+          subtitle: Text(post.timeStamp),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Profile(postUserId: post.ownerId),
+              ),
+            );
+          },
+          trailing: IconButton(
+            icon: Icon(
+              Icons.more_vert,
+              color: Colors.black54,
+            ),
+            onPressed: () {
+              // TODO show more
+            },
+          ),
+        ),
+        postSection(context),
+        rowButtons(context),
+        Divider(
+          color: Colors.black12,
+          height: 12.0,
+        ),
+      ],
+    );
+  }
+
+  postSection(BuildContext context) {
+    return FlatButton(
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => OpenPost(
+              post: post,
+              focus: false,
+            ),
+          ),
+        );
+      },
       child: Column(
         children: <Widget>[
-          FlatButton(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                ListTile(
-                  leading: CircleAvatar(
-                    backgroundImage: NetworkImage(post.userProfileImg),
-                  ),
-                  title: Text(
-                    post.userName,
-                    style: TextStyle(color: blackColor),
-                  ),
-                  subtitle: Text(
-                    post.timeStamp,
-                    style: TextStyle(color: blackColor),
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            OpenProfile(postUserId: post.ownerId),
-                      ),
-                    );
-                  },
-                  trailing: IconButton(
-                    icon: Icon(Icons.more_vert, color: blackColor),
-                    onPressed: () {
-                      // TODO show more
-                    },
-                  ),
-                ),
-                post.mediaUrl != null
-                    ? Hero(
-                        tag: 'postPhoto',
-                        child: Container(
-                          margin: EdgeInsets.only(top: 8.0, bottom: 8.0),
-                          height: 300.0,
-                          width: double.infinity,
-                          child: Image.network(
-                            post.mediaUrl,
-                            fit: BoxFit.cover,
-                            loadingBuilder: (BuildContext context, Widget child,
-                                ImageChunkEvent loadingProgress) {
-                              if (loadingProgress == null) {
-                                return child;
-                              } else {
-                                return Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    SpinKitFoldingCube(
-                                      color: homeColor,
-                                      size: 18.0,
-                                    ),
-                                    SizedBox(width: 14.0),
-                                    Text(
-                                      'Loading Image...',
-                                      style: TextStyle(color: blackColor),
-                                    ),
-                                  ],
-                                );
-                              }
-                            },
-                          ),
-                        ),
-                      )
-                    : Container(),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: 12.0,
-                    right: 12.0,
-                    bottom: 16.0,
-                  ),
-                  child: Text(
-                    post.description,
-                    maxLines: 4,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.normal,
-                      color: blackColor,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            onPressed: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => OpenPost(post: post))),
-          ),
-          Row(
-            children: <Widget>[
-              Expanded(
-                flex: 1,
-                child: IconButton(
-                  icon: Icon(
-                    LineIcons.thumbs_o_up,
-                    color: blackColor,
-                  ),
-                  onPressed: () {
-                    // TODO increase the like number
-                  },
-                ),
+          post.mediaUrl != null
+              ? PostImage(imageUrl: post.mediaUrl)
+              : Container(),
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 12.0),
+            child: Text(
+              post.description,
+              maxLines: 5,
+              softWrap: true,
+              overflow: TextOverflow.fade,
+              style: TextStyle(
+                fontSize: 14.0,
+                fontWeight: FontWeight.normal,
+                color: Colors.black87,
               ),
-              Expanded(
-                flex: 1,
-                child: IconButton(
-                  icon: Icon(
-                    LineIcons.comments_o,
-                    color: blackColor,
-                  ),
-                  onPressed: () {
-                    // TODO add new Comment
-                  },
-                ),
-              )
-            ],
+            ),
           ),
         ],
       ),
+    );
+  }
+
+  rowButtons(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          flex: 1,
+          child: IconButton(
+            icon: Icon(FontAwesomeIcons.thumbsUp),
+            onPressed: () {
+              // TODO increase the like number
+            },
+          ),
+        ),
+        Expanded(
+          flex: 1,
+          child: IconButton(
+            icon: Icon(FontAwesomeIcons.comments),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => OpenPost(
+                    post: post,
+                    focus: true,
+                  ),
+                ),
+              );
+            },
+          ),
+        )
+      ],
     );
   }
 }

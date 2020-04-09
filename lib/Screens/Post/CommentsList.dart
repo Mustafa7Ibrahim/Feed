@@ -6,11 +6,12 @@ import 'package:news_feed/models/Post.dart';
 import 'package:news_feed/Constant/constant.dart';
 
 class CommentsList extends StatefulWidget {
+  final focus;
   final Post thisPost;
 
   final ScrollController scrollController;
 
-  CommentsList({this.thisPost, this.scrollController});
+  CommentsList({this.thisPost, this.scrollController, this.focus});
 
   @override
   _CommentsListState createState() => _CommentsListState();
@@ -43,10 +44,7 @@ class _CommentsListState extends State<CommentsList> {
                 margin: EdgeInsets.only(top: 70.0),
                 height: 54.0,
                 child: Center(
-                  child: Text(
-                    'No Comments',
-                    style: TextStyle(color: blackColor),
-                  ),
+                  child: Text('No Comments'),
                 ),
               );
             }
@@ -55,15 +53,11 @@ class _CommentsListState extends State<CommentsList> {
                 margin: EdgeInsets.only(top: 70.0),
                 height: 54.0,
                 child: Center(
-                  child: Text(
-                    'oh! no! we got erroe ${snapshot.error}',
-                    style: TextStyle(color: blackColor),
-                  ),
+                  child: Text('oh! no! we got erroe ${snapshot.error}'),
                 ),
               );
             }
             return Container(
-              color: forgroungColor,
               margin: EdgeInsets.only(top: 110.0),
               child: ListView.builder(
                 controller: widget.scrollController,
@@ -82,7 +76,7 @@ class _CommentsListState extends State<CommentsList> {
   addnewComment() {
     return Container(
       decoration: BoxDecoration(
-        color: forgroungColor,
+        color: Colors.white,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20.0),
           topRight: Radius.circular(20.0),
@@ -100,7 +94,7 @@ class _CommentsListState extends State<CommentsList> {
                 child: Text(
                   'Comments',
                   style: TextStyle(
-                    color: homeColor,
+                    color: Theme.of(context).primaryColor,
                     fontSize: 16.0,
                     fontWeight: FontWeight.bold,
                   ),
@@ -110,7 +104,7 @@ class _CommentsListState extends State<CommentsList> {
                 margin: EdgeInsets.all(8.0),
                 child: Icon(
                   Icons.keyboard_arrow_up,
-                  color: homeColor,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
             ],
@@ -126,24 +120,25 @@ class _CommentsListState extends State<CommentsList> {
                   child: Container(
                     height: 55.0,
                     child: TextFormField(
-                      minLines: 1,
                       initialValue: null,
-                      cursorColor: homeColor,
-                      style: TextStyle(color: blackColor),
+                      autofocus: widget.focus,
                       keyboardType: TextInputType.multiline,
                       onChanged: (input) => setState(() => newComment = input),
                       decoration: InputDecoration(
                         hintText: 'Enter Your Comment',
-                        hintStyle: TextStyle(color: blackColor),
-                        fillColor: forgroungColor,
-                        filled: true,
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0),
-                          borderSide: BorderSide(color: homeColor, width: 2),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).primaryColor,
+                            width: 2,
+                          ),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0),
-                          borderSide: BorderSide(color: homeColor, width: 2),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).primaryColor,
+                            width: 2,
+                          ),
                         ),
                       ),
                     ),
@@ -157,13 +152,14 @@ class _CommentsListState extends State<CommentsList> {
                   margin: EdgeInsets.only(left: 4.0, right: 3.0),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20.0),
-                    color: homeColor,
+                    color: Theme.of(context).primaryColor,
                   ),
                   child: IconButton(
                     icon: showLoading == false
-                        ? Icon(Icons.send, color: whiteColor)
-                        : SpinKitChasingDots(color: homeColor),
-                    color: blackColor,
+                        ? Icon(Icons.send)
+                        : SpinKitChasingDots(
+                            color: Theme.of(context).accentColor,
+                          ),
                     onPressed: () async {
                       setState(() => showLoading = true);
                       await comment

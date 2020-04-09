@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:news_feed/Screens/AddNewPost/AddNewPost.dart';
-import 'package:news_feed/Constant/constant.dart';
 
 import 'Home/Home.dart';
-import 'Profile/profile.dart';
 import 'chat/chat.dart';
+import 'userProfile/userProfile.dart';
 
 class Wrapper extends StatefulWidget {
   @override
@@ -22,8 +21,7 @@ class _WrapperState extends State<Wrapper> {
     Home(),
     Chat(),
     AddNewPost(),
-    Profile(),
-    // Settings(),
+    UserProfile(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -33,7 +31,7 @@ class _WrapperState extends State<Wrapper> {
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: backgroundColor,
+          color: Colors.white,
           boxShadow: [
             BoxShadow(
               blurRadius: 20,
@@ -45,44 +43,39 @@ class _WrapperState extends State<Wrapper> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
             child: GNav(
-                gap: 8,
-                activeColor: whiteColor,
-                iconSize: 24,
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                duration: Duration(milliseconds: 800),
-                tabs: [
-                  GButton(
-                    icon: Icons.home,
-                    text: 'Home',
-                    textColor: whiteColor,
-                    backgroundColor: homeColor,
-                  ),
-                  GButton(
-                    icon: Icons.chat,
-                    text: 'Chat',
-                    textColor: whiteColor,
-                    backgroundColor: chatColor,
-                  ),
-                  GButton(
-                    icon: Icons.add,
-                    text: 'Add',
-                    textColor: whiteColor,
-                    backgroundColor: addPostColor,
-                  ),
-                  GButton(
-                    icon: Icons.person,
-                    text: 'Profile',
-                    textColor: whiteColor,
-                    backgroundColor: profileColor,
-                  ),
-                
-                ],
-                selectedIndex: _selectedIndex,
-                onTabChange: (index) {
-                  setState(() {
-                    _selectedIndex = index;
-                  });
-                }),
+              gap: 8,
+              activeColor: Colors.white,
+              tabBackgroundColor: Theme.of(context).primaryColor,
+              iconSize: 24,
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              duration: Duration(milliseconds: 500),
+              tabs: [
+                GButton(
+                  icon: Icons.home,
+                  text: 'Home',
+                  // textColor: whiteColor,
+                ),
+                GButton(
+                  icon: Icons.chat,
+                  text: 'Chat',
+                  // textColor: whiteColor,
+                ),
+                GButton(
+                  icon: Icons.add,
+                  text: 'Add',
+                  // textColor: whiteColor,
+                ),
+                GButton(
+                  icon: Icons.person,
+                  text: 'Profile',
+                  // textColor: whiteColor,
+                ),
+              ],
+              selectedIndex: _selectedIndex,
+              onTabChange: (index) {
+                setState(() => _selectedIndex = index);
+              },
+            ),
           ),
         ),
       ),

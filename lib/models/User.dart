@@ -40,6 +40,10 @@ class User {
     );
   }
 
+  Stream<User> get userData{
+    return userCollection.document().snapshots().map(getUserData);
+  }
+
   User getCurrentUser(FirebaseUser user) {
     return user != null
         ? User(

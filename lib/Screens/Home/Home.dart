@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:news_feed/Auth/Auth.dart';
 import 'package:news_feed/Screens/Home/PostsList.dart';
-import 'package:news_feed/Constant/constant.dart';
+import 'package:news_feed/Screens/Settings/Settings.dart';
+import 'package:news_feed/models/PopUpMenu.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -9,24 +10,43 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  ScrollController scrollController = ScrollController();
   Auth auth = Auth();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
       appBar: AppBar(
-        backgroundColor: homeColor,
-        centerTitle: true,
         elevation: 0.0,
-        title: Text('Home', style: TextStyle(color: whiteColor)),
-        leading: IconButton(
-          icon: Icon(Icons.remove_circle_outline, color: whiteColor),
-          onPressed: () => auth.signOutGoogle(context),
-        ),
+        title: Text('Discovery'),
+        actions: <Widget>[
+          PopupMenuButton(
+            onSelected: select,
+            itemBuilder: (context) {
+              return PopUpMenu.choices.map((String choice) {
+                return PopupMenuItem(
+                  child: Text(choice),
+                  value: choice,
+                );
+              }).toList();
+            },
+          ),
+        ],
       ),
-      // the list of posts
       body: PostsList(),
     );
+  }
+
+  void select(String choice) {
+    if (choice == PopUpMenu.settings) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Settings(),
+        ),
+      );
+    } else if (choice == PopUpMenu.signOut) {
+      auth.signOutGoogle(context);
+    }
   }
 }

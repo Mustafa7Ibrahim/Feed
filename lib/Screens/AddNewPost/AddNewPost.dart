@@ -6,7 +6,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:news_feed/models/Post.dart';
-import 'package:news_feed/Constant/constant.dart';
 import 'package:news_feed/models/User.dart';
 import 'package:provider/provider.dart';
 
@@ -42,19 +41,9 @@ class _AddNewPostState extends State<AddNewPost> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: forgroungColor,
       appBar: AppBar(
-        backgroundColor: addPostColor,
-        elevation: 0.0,
         centerTitle: true,
-        title: Text(
-          'ADD NEW POST',
-          style: TextStyle(
-            color: whiteColor,
-            fontWeight: FontWeight.bold,
-            fontSize: 20.0,
-          ),
-        ),
+        title: Text('ADD NEW POST'),
       ),
       body: SafeArea(
         child: ListView(
@@ -70,28 +59,17 @@ class _AddNewPostState extends State<AddNewPost> {
                     controller: _controller,
                     maxLines: 8,
                     minLines: 5,
-                    cursorColor: addPostColor,
-                    style: TextStyle(color: blackColor),
                     keyboardType: TextInputType.multiline,
                     onChanged: (input) => setState(() => newPost = input),
                     decoration: InputDecoration(
                       hintText: 'Enter your Post',
-                      hintStyle: TextStyle(color: blackColor),
-                      fillColor: forgroungColor,
-                      filled: true,
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12.0),
-                        borderSide: BorderSide(
-                          color: addPostColor,
-                          width: 2,
-                        ),
+                        borderSide: BorderSide(width: 1, color: Theme.of(context).primaryColor,),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12.0),
-                        borderSide: BorderSide(
-                          color: addPostColor,
-                          width: 2,
-                        ),
+                        borderSide: BorderSide(width: 1,color: Theme.of(context).primaryColor,),
                       ),
                     ),
                   ),
@@ -103,11 +81,9 @@ class _AddNewPostState extends State<AddNewPost> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: addPostColor,
         child: showLoadingPost == false
             ? Icon(Icons.add)
-            : SpinKitFoldingCube(color: blackColor, size: 12.0),
-        isExtended: true,
+            : SpinKitFoldingCube(color: Theme.of(context).accentColor, size: 12.0),
         onPressed: () async {
           if (newPost != null) {
             setState(() => showLoadingPost = true);
@@ -152,11 +128,7 @@ class _AddNewPostState extends State<AddNewPost> {
           SizedBox(width: 8.0),
           Text(
             _user?.name ?? 'User Name',
-            style: TextStyle(
-              color: blackColor,
-              fontSize: 16.0,
-              fontWeight: FontWeight.bold,
-            ),
+            // style: TextStyle(fontSize: 16.0),
           ),
           SizedBox(width: 12.0),
         ],
@@ -182,15 +154,12 @@ class _AddNewPostState extends State<AddNewPost> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          Icon(Icons.add, color: blackColor),
+                          Icon(Icons.add),
                           SizedBox(width: 4.0),
-                          Text(
-                            'Add Photo',
-                            style: TextStyle(color: blackColor),
-                          ),
+                          Text('Add Photo'),
                         ],
                       )
-                    : SpinKitFoldingCube(color: addPostColor),
+                    : SpinKitFoldingCube(color: Theme.of(context).accentColor),
           ),
         ),
       ),

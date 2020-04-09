@@ -5,14 +5,21 @@ import 'package:news_feed/models/Post.dart';
 import 'package:news_feed/models/User.dart';
 import 'package:news_feed/widgets/post_image.dart';
 
-class ProfilePostTile extends StatelessWidget {
+class UserProfilePosts extends StatefulWidget {
   final Post post;
   final User user;
-  ProfilePostTile({this.post, this.user});
+  UserProfilePosts({this.post, this.user});
+
+  @override
+  _UserProfilePostsState createState() => _UserProfilePostsState();
+}
+
+class _UserProfilePostsState extends State<UserProfilePosts> {
+  bool maxLines = true;
 
   @override
   Widget build(BuildContext context) {
-    if (post.ownerId == user?.userId ?? '') {
+    if (widget.post.ownerId == widget?.user?.userId ?? '') {
       return Container(
         margin: EdgeInsets.only(top: 8.0),
         child: Column(
@@ -25,30 +32,39 @@ class ProfilePostTile extends StatelessWidget {
                   ListTile(
                     leading: CircleAvatar(
                       backgroundImage: NetworkImage(
-                        post?.userProfileImg ??
+                        widget?.post?.userProfileImg ??
                             'https://fakeimg.pl/350x200/?text=World&font=lobster',
                       ),
                     ),
-                    title: Text(post.userName),
-                    subtitle: Text(post.timeStamp),
+                    title: Text(
+                      widget.post.userName
+                    ),
+                    subtitle: Text(
+                      widget.post.timeStamp,
+                    ),
                     trailing: IconButton(
-                      icon: Icon(Icons.more_vert),
+                      icon: Icon(
+                        Icons.more_vert,
+                      ),
                       onPressed: () {
                         // TODO show more
                       },
                     ),
                   ),
-                  post.mediaUrl != null
-                      ? PostImage(imageUrl: post.mediaUrl)
+                  widget.post.mediaUrl != null
+                      ? PostImage(imageUrl: widget.post.mediaUrl)
                       : Container(),
-                  Container(
-                    margin:
-                        EdgeInsets.symmetric(vertical: 4.0, horizontal: 12.0),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: 12.0,
+                      right: 12.0,
+                      bottom: 16.0,
+                    ),
                     child: Text(
-                      post.description,
+                      widget.post.description,
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontWeight: FontWeight.normal),
+                    
                     ),
                   ),
                 ],
@@ -56,7 +72,7 @@ class ProfilePostTile extends StatelessWidget {
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => OpenPost(post: post),
+                  builder: (context) => OpenPost(post: widget.post),
                 ),
               ),
             ),
