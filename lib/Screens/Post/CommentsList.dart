@@ -156,7 +156,7 @@ class _CommentsListState extends State<CommentsList> {
                   ),
                   child: IconButton(
                     icon: showLoading == false
-                        ? Icon(Icons.send)
+                        ? Icon(Icons.send, color: Colors.white)
                         : SpinKitChasingDots(
                             color: Theme.of(context).accentColor,
                           ),

@@ -58,7 +58,7 @@ class _AddNewPostState extends State<AddNewPost> {
                     scrollPadding: EdgeInsets.all(14.0),
                     controller: _controller,
                     maxLines: 8,
-                    minLines: 5,
+                    minLines: 4,
                     keyboardType: TextInputType.multiline,
                     onChanged: (input) => setState(() => newPost = input),
                     decoration: InputDecoration(
@@ -82,8 +82,8 @@ class _AddNewPostState extends State<AddNewPost> {
       ),
       floatingActionButton: FloatingActionButton(
         child: showLoadingPost == false
-            ? Icon(Icons.add)
-            : SpinKitFoldingCube(color: Theme.of(context).accentColor, size: 12.0),
+            ? Icon(Icons.add, color: Colors.white)
+            : SpinKitFoldingCube(color: Colors.white, size: 12.0),
         onPressed: () async {
           if (newPost != null) {
             setState(() => showLoadingPost = true);

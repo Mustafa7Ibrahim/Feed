@@ -17,6 +17,7 @@ class _PostsListState extends State<PostsList> {
     final _post = Provider.of<List<Post>>(context) ?? [];
     return _post.length != 0
         ? ListView.builder(
+          
             controller: widget.controller,
             itemCount: _post.length,
             itemBuilder: (context, index) {
@@ -24,8 +25,8 @@ class _PostsListState extends State<PostsList> {
             },
           )
         : Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               SpinKitFoldingCube(
                 color: Theme.of(context).accentColor,

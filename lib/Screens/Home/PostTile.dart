@@ -29,14 +29,9 @@ class PostTile extends StatelessWidget {
               ),
             );
           },
-        
         ),
         postSection(context),
         rowButtons(context),
-        Divider(
-          color: Colors.black12,
-          height: 12.0,
-        ),
       ],
     );
   }
@@ -55,6 +50,8 @@ class PostTile extends StatelessWidget {
         );
       },
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           post.mediaUrl != null
               ? PostImage(imageUrl: post.mediaUrl)
@@ -85,8 +82,7 @@ class PostTile extends StatelessWidget {
           flex: 1,
           child: IconButton(
             icon: Icon(FontAwesomeIcons.thumbsUp),
-            onPressed: () {
-            },
+            onPressed: () {},
           ),
         ),
         Expanded(

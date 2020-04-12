@@ -31,7 +31,6 @@ class ProfilePostTile extends StatelessWidget {
                     ),
                     title: Text(post.userName),
                     subtitle: Text(post.timeStamp),
-                   
                   ),
                   post.mediaUrl != null
                       ? PostImage(imageUrl: post.mediaUrl)
@@ -51,7 +50,10 @@ class ProfilePostTile extends StatelessWidget {
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => OpenPost(post: post),
+                  builder: (context) => OpenPost(
+                    post: post,
+                    focus: false,
+                  ),
                 ),
               ),
             ),
@@ -61,8 +63,7 @@ class ProfilePostTile extends StatelessWidget {
                   flex: 1,
                   child: IconButton(
                     icon: Icon(FontAwesomeIcons.thumbsUp),
-                    onPressed: () {
-                    },
+                    onPressed: () {},
                   ),
                 ),
                 Expanded(
@@ -70,6 +71,15 @@ class ProfilePostTile extends StatelessWidget {
                   child: IconButton(
                     icon: Icon(FontAwesomeIcons.comments),
                     onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => OpenPost(
+                            post: post,
+                            focus: true,
+                          ),
+                        ),
+                      );
                     },
                   ),
                 )

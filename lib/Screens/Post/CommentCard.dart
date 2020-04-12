@@ -7,28 +7,58 @@ class CommentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          ListTile(
-            title: Text(comment.name),
-            leading: CircleAvatar(
-              backgroundImage: NetworkImage(comment.userImageUrl),
-              radius: 18.0,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.all(12.0),
+              child: CircleAvatar(
+                backgroundImage: NetworkImage(comment.userImageUrl),
+                radius: 20.0,
+              ),
             ),
-            trailing: Text(comment.timeStamp),
-          ),
-          Container(
-            margin: EdgeInsets.only(left: 70.0, right: 66.0),
-            child: Text(
-              comment.comment
-              // style: TextStyle(color: blackColor, fontSize: 15.0),
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.all(12.0),
+                margin: EdgeInsets.only(top: 4.0, right: 12.0, bottom: 4.0),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          comment.name,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Spacer(),
+                      ],
+                    ),
+                    Text(
+                      comment.comment,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ],
+                ),
+              ),
             ),
-          ),
-          Divider(color: Colors.black26),
-        ],
-      ),
+          ],
+        ),
+        Container(margin: EdgeInsets.only(left: 66.0),child: Text(comment.timeStamp),),
+      ],
     );
   }
 }

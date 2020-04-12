@@ -61,7 +61,10 @@ class _UserProfilePostsState extends State<UserProfilePosts> {
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => OpenPost(post: widget.post),
+                  builder: (context) => OpenPost(
+                    post: widget.post,
+                    focus: false,
+                  ),
                 ),
               ),
             ),

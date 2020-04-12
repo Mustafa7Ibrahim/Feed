@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:date_format/date_format.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:news_feed/Constant/constant.dart';
 
@@ -11,8 +12,11 @@ class Post {
   final String timeStamp;
   final postId;
 
-  DateTime _dateTime = DateTime.now();
-
+  String _dateTime = formatDate(
+    DateTime.now(),
+    [yyyy, '-', mm, '-', dd, ' ', HH, ':', nn],
+  );
+  
   Post({
     this.ownerId,
     this.userName,

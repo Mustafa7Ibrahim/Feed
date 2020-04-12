@@ -52,7 +52,7 @@ class _WrapperState extends State<Wrapper> {
               tabs: [
                 GButton(
                   icon: Icons.home,
-                  text: 'Home',
+                  text: 'Discovery',
                   // textColor: whiteColor,
                 ),
                 GButton(
