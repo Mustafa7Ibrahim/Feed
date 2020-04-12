@@ -36,19 +36,9 @@ class _UserProfilePostsState extends State<UserProfilePosts> {
                             'https://fakeimg.pl/350x200/?text=World&font=lobster',
                       ),
                     ),
-                    title: Text(
-                      widget.post.userName
-                    ),
+                    title: Text(widget.post.userName),
                     subtitle: Text(
                       widget.post.timeStamp,
-                    ),
-                    trailing: IconButton(
-                      icon: Icon(
-                        Icons.more_vert,
-                      ),
-                      onPressed: () {
-                        // TODO show more
-                      },
                     ),
                   ),
                   widget.post.mediaUrl != null
@@ -64,7 +54,6 @@ class _UserProfilePostsState extends State<UserProfilePosts> {
                       widget.post.description,
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
-                    
                     ),
                   ),
                 ],
@@ -82,9 +71,7 @@ class _UserProfilePostsState extends State<UserProfilePosts> {
                   flex: 1,
                   child: IconButton(
                     icon: Icon(FontAwesomeIcons.thumbsUp),
-                    onPressed: () {
-                      // TODO increase the like number
-                    },
+                    onPressed: () {},
                   ),
                 ),
                 Expanded(
@@ -92,7 +79,15 @@ class _UserProfilePostsState extends State<UserProfilePosts> {
                   child: IconButton(
                     icon: Icon(FontAwesomeIcons.comments),
                     onPressed: () {
-                      // TODO add new Comment
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => OpenPost(
+                            post: widget.post,
+                            focus: true,
+                          ),
+                        ),
+                      );
                     },
                   ),
                 )

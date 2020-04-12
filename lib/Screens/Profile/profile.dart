@@ -71,9 +71,7 @@ class _ProfileState extends State<Profile> {
                     child: IconButton(
                       color: Colors.green[300],
                       icon: Icon(FontAwesomeIcons.sms),
-                      onPressed: () {
-                        //TODO send message
-                      },
+                      onPressed: () {},
                     ),
                   ),
                   SizedBox(width: 20.0),
@@ -85,9 +83,7 @@ class _ProfileState extends State<Profile> {
                     child: IconButton(
                       color: Colors.blueAccent,
                       icon: Icon(FontAwesomeIcons.facebookSquare),
-                      onPressed: () {
-                        // TODO open facebook app page
-                      },
+                      onPressed: () {},
                     ),
                   ),
                   SizedBox(width: 20.0),
@@ -99,9 +95,7 @@ class _ProfileState extends State<Profile> {
                     child: IconButton(
                       color: Colors.blue,
                       icon: Icon(FontAwesomeIcons.linkedin),
-                      onPressed: () {
-                        // TODO open linkedIn page
-                      },
+                      onPressed: () {},
                     ),
                   ),
                 ],

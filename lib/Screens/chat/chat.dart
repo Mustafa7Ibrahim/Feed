@@ -20,6 +20,7 @@ class Chat extends StatelessWidget {
             if (listOfUser[index].userId != currentUser.userId) {
               return ListOfChats(
                 user: listOfUser[index],
+                currentUser: currentUser,
               );
             } else
               return Container();

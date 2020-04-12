@@ -72,7 +72,6 @@ class _UserProfileState extends State<UserProfile> {
                 color: Colors.green[300],
                 icon: Icon(Icons.chat_bubble_outline),
                 onPressed: () {
-                  //TODO send message
                 },
               ),
             ),
@@ -86,7 +85,6 @@ class _UserProfileState extends State<UserProfile> {
                 color: Colors.blueAccent,
                 icon: Icon(FontAwesomeIcons.facebookSquare),
                 onPressed: () {
-                  // TODO open facebook app page
                 },
               ),
             ),
@@ -100,7 +98,6 @@ class _UserProfileState extends State<UserProfile> {
                 color: Colors.blue,
                 icon: Icon(FontAwesomeIcons.linkedin),
                 onPressed: () {
-                  // TODO open linkedIn page
                 },
               ),
             ),

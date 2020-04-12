@@ -29,15 +29,7 @@ class PostTile extends StatelessWidget {
               ),
             );
           },
-          trailing: IconButton(
-            icon: Icon(
-              Icons.more_vert,
-              color: Colors.black54,
-            ),
-            onPressed: () {
-              // TODO show more
-            },
-          ),
+        
         ),
         postSection(context),
         rowButtons(context),
@@ -94,7 +86,6 @@ class PostTile extends StatelessWidget {
           child: IconButton(
             icon: Icon(FontAwesomeIcons.thumbsUp),
             onPressed: () {
-              // TODO increase the like number
             },
           ),
         ),

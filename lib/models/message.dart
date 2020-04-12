@@ -8,13 +8,12 @@ class Message {
   final String userId;
   final String friendId;
   final String message;
-  final Timestamp timestamp;
-  final String userImg;
+  final String timestamp;
   final String friendImg;
 
   String _dateTime = formatDate(
     DateTime.now(),
-    [yyyy, '-', mm, '-', dd, ' ', nn, ':', ss],
+    [yyyy, '-', mm, '-', dd, ' ', HH, ':', nn],
   );
 
   Message({
@@ -24,11 +23,14 @@ class Message {
     this.message,
     this.timestamp,
     this.friendImg,
-    this.userImg,
   });
 
-  Future sendMessage(
-      {String message, String userId, String friendImg, String chatId}) async {
+  Future sendMessage({
+    String message,
+    String userId,
+    String friendImg,
+    String chatId,
+  }) async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
     return await chatCollection
         .document(chatId)
@@ -40,7 +42,6 @@ class Message {
       'message': message,
       'timestamp': _dateTime.toString(),
       'friendImg': friendImg,
-      'userImg': user.photoUrl,
     });
   }
 
@@ -53,7 +54,6 @@ class Message {
         message: mess.data['message'],
         friendImg: mess.data['friendImg'],
         timestamp: mess.data['timestamp'],
-        userImg: mess.data['userImg'],
       );
     }).toList();
   }

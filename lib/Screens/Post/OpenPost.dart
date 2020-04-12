@@ -76,12 +76,7 @@ class _OpenPostState extends State<OpenPost> {
           ),
         );
       },
-      trailing: IconButton(
-        icon: Icon(Icons.more_vert),
-        onPressed: () {
-          // TODO show more
-        },
-      ),
+      
     );
   }
 
@@ -94,7 +89,6 @@ class _OpenPostState extends State<OpenPost> {
             child: IconButton(
               icon: Icon(FontAwesomeIcons.thumbsUp),
               onPressed: () {
-                // TODO increase the like number
               },
             ),
           ),

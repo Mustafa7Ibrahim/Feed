@@ -31,12 +31,7 @@ class ProfilePostTile extends StatelessWidget {
                     ),
                     title: Text(post.userName),
                     subtitle: Text(post.timeStamp),
-                    trailing: IconButton(
-                      icon: Icon(Icons.more_vert),
-                      onPressed: () {
-                        // TODO show more
-                      },
-                    ),
+                   
                   ),
                   post.mediaUrl != null
                       ? PostImage(imageUrl: post.mediaUrl)
@@ -67,7 +62,6 @@ class ProfilePostTile extends StatelessWidget {
                   child: IconButton(
                     icon: Icon(FontAwesomeIcons.thumbsUp),
                     onPressed: () {
-                      // TODO increase the like number
                     },
                   ),
                 ),
@@ -76,7 +70,6 @@ class ProfilePostTile extends StatelessWidget {
                   child: IconButton(
                     icon: Icon(FontAwesomeIcons.comments),
                     onPressed: () {
-                      // TODO add new Comment
                     },
                   ),
                 )
