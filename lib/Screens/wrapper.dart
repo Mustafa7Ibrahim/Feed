@@ -13,10 +13,10 @@ class Wrapper extends StatefulWidget {
 
 class _WrapperState extends State<Wrapper> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle = TextStyle(
-    fontSize: 30,
-    fontWeight: FontWeight.bold,
-  );
+  // static const TextStyle optionStyle = TextStyle(
+  //   fontSize: 30,
+  //   fontWeight: FontWeight.bold,
+  // );
   List<Widget> _widgetOptions = <Widget>[
     Home(),
     Chat(),

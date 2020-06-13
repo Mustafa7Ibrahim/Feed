@@ -11,26 +11,26 @@ ThemeData theme = ThemeData(
     brightness: Brightness.light,
     iconTheme: IconThemeData(color: Colors.black87),
     actionsIconTheme: IconThemeData(color: Colors.black87),
-    textTheme: TextTheme(
-      title: TextStyle(
-        color: Colors.black87,
-        fontSize: 20.0,
-        fontWeight: FontWeight.bold,
-      ),
-    ),
+    // textTheme: TextTheme(
+    //   title: TextStyle(
+    //     color: Colors.black87,
+    //     fontSize: 20.0,
+    //     fontWeight: FontWeight.bold,
+    //   ),
+    // ),
   ),
-  primaryTextTheme: TextTheme(
-    // text of time
-    body1: TextStyle(
-      color: Colors.black87,
-      fontSize: 12.0,
-    ),
+  // primaryTextTheme: TextTheme(
+  //   // text of time
+  //   body1: TextStyle(
+  //     color: Colors.black87,
+  //     fontSize: 12.0,
+  //   ),
 
-    // title in some element
-    subhead: TextStyle(
-      fontSize: 16.0,
-    ),
-  ),
+  //   // title in some element
+  //   subhead: TextStyle(
+  //     fontSize: 16.0,
+  //   ),
+  // ),
   iconTheme: IconThemeData(color: Colors.black87),
   floatingActionButtonTheme: FloatingActionButtonThemeData(
     backgroundColor: Colors.greenAccent,
