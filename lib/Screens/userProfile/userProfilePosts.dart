@@ -24,83 +24,91 @@ class _UserProfilePostsState extends State<UserProfilePosts> {
         margin: EdgeInsets.only(top: 8.0),
         child: Column(
           children: <Widget>[
-            FlatButton(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        widget?.post?.userProfileImg ??
-                            'https://fakeimg.pl/350x200/?text=World&font=lobster',
-                      ),
-                    ),
-                    title: Text(widget.post.userName),
-                    subtitle: Text(
-                      widget.post.timeStamp,
-                    ),
-                  ),
-                  widget.post.mediaUrl != null
-                      ? PostImage(imageUrl: widget.post.mediaUrl)
-                      : Container(),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: 12.0,
-                      right: 12.0,
-                      bottom: 16.0,
-                    ),
-                    child: Text(
-                      widget.post.description,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
-              ),
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => OpenPost(
-                    post: widget.post,
-                    focus: false,
-                  ),
-                ),
-              ),
-            ),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  flex: 1,
-                  child: IconButton(
-                    icon: Icon(FontAwesomeIcons.thumbsUp),
-                    onPressed: () {},
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: IconButton(
-                    icon: Icon(FontAwesomeIcons.comments),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => OpenPost(
-                            post: widget.post,
-                            focus: true,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                )
-              ],
-            ),
+            userInfo(context),
+            interact(context),
           ],
         ),
       );
     } else {
       return Container();
     }
+  }
+
+  FlatButton userInfo(BuildContext context) {
+    return FlatButton(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          ListTile(
+            leading: CircleAvatar(
+              backgroundImage: NetworkImage(
+                widget?.post?.userProfileImg ??
+                    'https://fakeimg.pl/350x200/?text=World&font=lobster',
+              ),
+            ),
+            title: Text(widget.post.userName),
+            subtitle: Text(
+              widget.post.timeStamp,
+            ),
+          ),
+          widget.post.mediaUrl != null
+              ? PostImage(imageUrl: widget.post.mediaUrl)
+              : Container(),
+          Padding(
+            padding: EdgeInsets.only(
+              left: 12.0,
+              right: 12.0,
+              bottom: 16.0,
+            ),
+            child: Text(
+              widget.post.description,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
+      ),
+      onPressed: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => OpenPost(
+            post: widget.post,
+            focus: false,
+          ),
+        ),
+      ),
+    );
+  }
+
+  interact(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          flex: 1,
+          child: IconButton(
+            icon: Icon(FontAwesomeIcons.thumbsUp),
+            onPressed: () {},
+          ),
+        ),
+        Expanded(
+          flex: 1,
+          child: IconButton(
+            icon: Icon(FontAwesomeIcons.comments),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => OpenPost(
+                    post: widget.post,
+                    focus: true,
+                  ),
+                ),
+              );
+            },
+          ),
+        )
+      ],
+    );
   }
 }

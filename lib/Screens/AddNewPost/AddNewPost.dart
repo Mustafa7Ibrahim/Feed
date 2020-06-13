@@ -71,14 +71,14 @@ class _AddNewPostState extends State<AddNewPost> {
                         borderRadius: BorderRadius.circular(12.0),
                         borderSide: BorderSide(
                           width: 1,
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).accentColor,
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12.0),
                         borderSide: BorderSide(
                           width: 1,
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).accentColor,
                         ),
                       ),
                     ),
@@ -164,12 +164,20 @@ class _AddNewPostState extends State<AddNewPost> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          Icon(Icons.add),
+                          Icon(
+                            Icons.add,
+                            color: Theme.of(context).primaryColor,
+                          ),
                           SizedBox(width: 4.0),
-                          Text('Add Photo'),
+                          Text(
+                            'Add Photo',
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
                         ],
                       )
-                    : SpinKitFoldingCube(color: Theme.of(context).accentColor),
+                    : SpinKitFoldingCube(color: Theme.of(context).primaryColor),
           ),
         ),
       ),

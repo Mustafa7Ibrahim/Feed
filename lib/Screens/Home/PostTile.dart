@@ -15,24 +15,28 @@ class PostTile extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        ListTile(
-          leading: CircleAvatar(
-            backgroundImage: NetworkImage(post.userProfileImg),
-          ),
-          title: Text(post.userName),
-          subtitle: Text(post.timeStamp),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Profile(postUserId: post.ownerId),
-              ),
-            );
-          },
-        ),
+        userInfo(context),
         postSection(context),
         rowButtons(context),
       ],
+    );
+  }
+
+  ListTile userInfo(BuildContext context) {
+    return ListTile(
+      leading: CircleAvatar(
+        backgroundImage: NetworkImage(post.userProfileImg),
+      ),
+      title: Text(post.userName),
+      subtitle: Text(post.timeStamp),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Profile(postUserId: post.ownerId),
+          ),
+        );
+      },
     );
   }
 
@@ -53,9 +57,6 @@ class PostTile extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          post.mediaUrl != null
-              ? PostImage(imageUrl: post.mediaUrl)
-              : Container(),
           Container(
             margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 12.0),
             child: Text(
@@ -63,13 +64,12 @@ class PostTile extends StatelessWidget {
               maxLines: 5,
               softWrap: true,
               overflow: TextOverflow.fade,
-              style: TextStyle(
-                fontSize: 14.0,
-                fontWeight: FontWeight.normal,
-                color: Colors.black87,
-              ),
+              style: Theme.of(context).textTheme.bodyText2,
             ),
           ),
+          post.mediaUrl != null
+              ? PostImage(imageUrl: post.mediaUrl)
+              : Container(),
         ],
       ),
     );
@@ -81,14 +81,20 @@ class PostTile extends StatelessWidget {
         Expanded(
           flex: 1,
           child: IconButton(
-            icon: Icon(FontAwesomeIcons.thumbsUp),
+            icon: Icon(
+              FontAwesomeIcons.thumbsUp,
+              color: Colors.grey[400],
+            ),
             onPressed: () {},
           ),
         ),
         Expanded(
           flex: 1,
           child: IconButton(
-            icon: Icon(FontAwesomeIcons.comments),
+            icon: Icon(
+              FontAwesomeIcons.comments,
+              color: Colors.grey[400],
+            ),
             onPressed: () {
               Navigator.push(
                 context,
