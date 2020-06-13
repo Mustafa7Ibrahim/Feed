@@ -24,8 +24,8 @@ class _PostsListState extends State<PostsList> {
             },
           )
         : Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               SpinKitFoldingCube(
                 color: Theme.of(context).primaryColor,

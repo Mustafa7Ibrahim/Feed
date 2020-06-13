@@ -22,7 +22,7 @@ class PostImage extends StatelessWidget {
                 ? child
                 : Center(
                     child: SpinKitFoldingCube(
-                      color: Theme.of(context).accentColor,
+                      color: Theme.of(context).primaryColor,
                       size: 18.0,
                     ),
                   );
