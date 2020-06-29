@@ -16,7 +16,9 @@ dependencies:
   firebase_auth: ^0.16.1
   cloud_firestore: ^0.13.4+2
   google_sign_in: ^4.4.0
+  firebase_core: ^0.4.4+3
   firebase_storage: ^3.1.1
+  firebase_messaging: ^6.0.13
   provider: ^4.0.4
   fluttertoast: ^4.0.1
   image_picker: ^0.6.3+4
@@ -25,6 +27,7 @@ dependencies:
   shared_preferences: ^0.5.6+3
   flutter_spinkit: ^4.1.2
   google_nav_bar: ^2.1.0
+  flutter_local_notifications: ^1.4.1
 
 
 dev_dependencies:
