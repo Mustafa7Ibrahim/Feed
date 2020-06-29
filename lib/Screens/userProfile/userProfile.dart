@@ -6,6 +6,7 @@ import 'package:news_feed/models/Post.dart';
 import 'package:news_feed/models/User.dart';
 import 'package:provider/provider.dart';
 
+
 class UserProfile extends StatefulWidget {
   @override
   _UserProfileState createState() => _UserProfileState();
@@ -48,16 +49,11 @@ class _UserProfileState extends State<UserProfile> {
         ),
         SizedBox(height: 14.0),
         Center(
-          child: Text(
-            user?.name ?? ''
-          ),
+          child: Text(user?.name ?? ''),
         ),
         SizedBox(height: 12.0),
         Center(
-          child: Text(
-            user?.email ?? ''
-          
-          ),
+          child: Text(user?.email ?? ''),
         ),
         SizedBox(height: 16.0),
         Row(
@@ -71,8 +67,7 @@ class _UserProfileState extends State<UserProfile> {
               child: IconButton(
                 color: Colors.green[300],
                 icon: Icon(Icons.chat_bubble_outline),
-                onPressed: () {
-                },
+                onPressed: () {},
               ),
             ),
             SizedBox(width: 20.0),
@@ -84,8 +79,7 @@ class _UserProfileState extends State<UserProfile> {
               child: IconButton(
                 color: Colors.blueAccent,
                 icon: Icon(FontAwesomeIcons.facebookSquare),
-                onPressed: () {
-                },
+                onPressed: () {},
               ),
             ),
             SizedBox(width: 20.0),
@@ -97,8 +91,7 @@ class _UserProfileState extends State<UserProfile> {
               child: IconButton(
                 color: Colors.blue,
                 icon: Icon(FontAwesomeIcons.linkedin),
-                onPressed: () {
-                },
+                onPressed: () {},
               ),
             ),
           ],

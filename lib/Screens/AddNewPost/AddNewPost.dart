@@ -21,7 +21,11 @@ class _AddNewPostState extends State<AddNewPost> {
 
   String imageUrl;
 
-  File imageFile;
+  final picker = ImagePicker();
+
+  File _image;
+
+  var pickedFile;
 
   bool showLoadingImage = false;
   bool showLoadingPost = false;
@@ -65,11 +69,17 @@ class _AddNewPostState extends State<AddNewPost> {
                       hintText: 'Enter your Post',
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12.0),
-                        borderSide: BorderSide(width: 1, color: Theme.of(context).primaryColor,),
+                        borderSide: BorderSide(
+                          width: 1,
+                          color: Theme.of(context).accentColor,
+                        ),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12.0),
-                        borderSide: BorderSide(width: 1,color: Theme.of(context).primaryColor,),
+                        borderSide: BorderSide(
+                          width: 1,
+                          color: Theme.of(context).accentColor,
+                        ),
                       ),
                     ),
                   ),
@@ -145,7 +155,7 @@ class _AddNewPostState extends State<AddNewPost> {
           child: ClipRect(
             child: (imageUrl != null)
                 ? Image.file(
-                    imageFile,
+                    _image,
                     fit: BoxFit.fitWidth,
                     width: double.infinity,
                   )
@@ -154,12 +164,20 @@ class _AddNewPostState extends State<AddNewPost> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          Icon(Icons.add),
+                          Icon(
+                            Icons.add,
+                            color: Theme.of(context).primaryColor,
+                          ),
                           SizedBox(width: 4.0),
-                          Text('Add Photo'),
+                          Text(
+                            'Add Photo',
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
                         ],
                       )
-                    : SpinKitFoldingCube(color: Theme.of(context).accentColor),
+                    : SpinKitFoldingCube(color: Theme.of(context).primaryColor),
           ),
         ),
       ),
@@ -169,17 +187,21 @@ class _AddNewPostState extends State<AddNewPost> {
 
   Future getImageUrl() async {
     setState(() => showLoadingImage = true);
-    imageFile = await ImagePicker.pickImage(source: ImageSource.gallery)
+    pickedFile = await ImagePicker()
+        .getImage(source: ImageSource.gallery)
         .whenComplete(() => setState(() => showLoadingImage = false));
-    if (imageFile != null) {
-      setState(() => imageUrl = imageFile.hashCode.toString());
+    if (pickedFile != null) {
+      setState(() {
+        imageUrl = pickedFile.hashCode.toString();
+        _image = File(pickedFile.path);
+      });
     }
   }
 
   Future uploadImage() async {
     String fileName = imageUrl;
     StorageReference reference = FirebaseStorage.instance.ref().child(fileName);
-    StorageUploadTask uploadTask = reference.putFile(imageFile);
+    StorageUploadTask uploadTask = reference.putFile(_image);
     StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
     dynamic url = await taskSnapshot.ref.getDownloadURL();
     if (url != null) {
