@@ -62,6 +62,7 @@ class Auth {
       assert(user.uid == currentUser.uid);
 
       preferences.setString('user', currentUser.displayName);
+      preferences.setString('userId', currentUser.uid);
 
       Navigator.pushReplacement(
         context,

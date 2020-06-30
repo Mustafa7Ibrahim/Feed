@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:news_feed/Screens/userProfile/userProfilePosts.dart';
 import 'package:news_feed/models/Post.dart';
 import 'package:news_feed/models/User.dart';
 import 'package:provider/provider.dart';
-
 
 class UserProfile extends StatefulWidget {
   @override
@@ -102,21 +102,27 @@ class _UserProfileState extends State<UserProfile> {
 
   userPosts(BuildContext context) {
     final user = Provider.of<User>(context);
-    final post = Provider.of<List<Post>>(context);
     return StreamBuilder(
       stream: Post().getPosts,
       builder: (context, snapshot) {
-        return ListView.builder(
-          controller: controller,
-          shrinkWrap: true,
-          itemCount: post.length,
-          itemBuilder: (context, index) {
-            return UserProfilePosts(
-              post: post[index],
-              user: user,
-            );
-          },
-        );
+        return snapshot.hasData
+            ? ListView.builder(
+                controller: controller,
+                shrinkWrap: true,
+                itemCount: snapshot.data.length,
+                itemBuilder: (context, index) {
+                  return UserProfilePosts(
+                    post: snapshot.data[index],
+                    user: user,
+                  );
+                },
+              )
+            : Center(
+                child: SpinKitFoldingCube(
+                  color: Theme.of(context).primaryColor,
+                  size: 24.0,
+                ),
+              );
       },
     );
   }

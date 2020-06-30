@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:news_feed/Constant/constant.dart';
 import 'package:news_feed/models/Post.dart';
 import 'package:news_feed/models/User.dart';
-import 'package:provider/provider.dart';
 
 import 'profilePostTile.dart';
 
@@ -109,21 +109,28 @@ class _ProfileState extends State<Profile> {
   }
 
   userPosts(BuildContext context, User user) {
-    final post = Provider.of<List<Post>>(context);
+    // final post = Provider.of<List<Post>>(context);
     return StreamBuilder(
       stream: Post().getPosts,
       builder: (context, snapshot) {
-        return ListView.builder(
-          controller: controller,
-          shrinkWrap: true,
-          itemCount: post.length,
-          itemBuilder: (context, index) {
-            return ProfilePostTile(
-              post: post[index],
-              user: user,
-            );
-          },
-        );
+        return snapshot.hasData
+            ? ListView.builder(
+                controller: controller,
+                shrinkWrap: true,
+                itemCount: snapshot.data.length,
+                itemBuilder: (context, index) {
+                  return ProfilePostTile(
+                    post: snapshot.data[index],
+                    user: user,
+                  );
+                },
+              )
+            : Center(
+                child: SpinKitFoldingCube(
+                  color: Theme.of(context).primaryColor,
+                  size: 24.0,
+                ),
+              );
       },
     );
   }
