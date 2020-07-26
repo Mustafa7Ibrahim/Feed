@@ -27,7 +27,7 @@ class CommentCard extends StatelessWidget {
                 padding: EdgeInsets.all(12.0),
                 margin: EdgeInsets.only(top: 4.0, right: 12.0, bottom: 4.0),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).accentColor,
                   borderRadius: BorderRadius.circular(20.0),
                 ),
                 child: Column(
@@ -57,7 +57,10 @@ class CommentCard extends StatelessWidget {
             ),
           ],
         ),
-        Container(margin: EdgeInsets.only(left: 66.0),child: Text(comment.timeStamp),),
+        Container(
+          margin: EdgeInsets.only(left: 66.0),
+          child: Text(comment.timeStamp),
+        ),
       ],
     );
   }

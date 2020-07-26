@@ -13,7 +13,7 @@ class ListChat extends StatelessWidget {
     final currentUser = Provider.of<User>(context);
     return message.userId != currentUser.userId
         ? Container(
-            margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
+            margin: EdgeInsets.symmetric(horizontal: 8.0, vertical: 6),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -24,40 +24,54 @@ class ListChat extends StatelessWidget {
                   children: <Widget>[
                     CircleAvatar(
                       backgroundImage: NetworkImage(message.friendImg),
-                      radius: 24.0,
+                      radius: 18.0,
                     ),
-                    Container(
-                      margin: EdgeInsets.symmetric(
-                        vertical: 4.0,
-                        horizontal: 4.0,
-                      ),
-                      padding: EdgeInsets.symmetric(
-                        vertical: 12.0,
-                        horizontal: 12.0,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColorLight,
-                        borderRadius: BorderRadius.circular(24.0),
-                      ),
-                      child: Text(
-                        message.message,
-                        textAlign: TextAlign.justify,
+                    SizedBox(width: 8.0),
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.all(4.0),
+                        padding: EdgeInsets.all(12.0),
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 12,
+                              offset: Offset(0, 8),
+                              color: Theme.of(context)
+                                  .iconTheme
+                                  .color
+                                  .withOpacity(0.1),
+                            ),
+                          ],
+                          color: Theme.of(context).accentColor,
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              message.message,
+                              textAlign: TextAlign.justify,
+                              style: Theme.of(context).textTheme.subtitle1,
+                            ),
+                            SizedBox(height: 6.0),
+                            Text(
+                              message.timestamp.toString(),
+                              style: TextStyle(
+                                fontSize: 8.0,
+                                color: Theme.of(context).iconTheme.color,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     )
                   ],
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: 58.0),
-                  child: Text(
-                    message.timestamp.toString(),
-                    style: TextStyle(fontSize: 12.0),
-                  ),
                 ),
               ],
             ),
           )
         : Container(
-            margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
+            margin: EdgeInsets.symmetric(horizontal: 8.0, vertical: 6),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -66,30 +80,50 @@ class ListChat extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.symmetric(
-                        vertical: 4.0,
-                        horizontal: 4.0,
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.all(4.0),
+                        padding: EdgeInsets.all(12.0),
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 12,
+                              offset: Offset(0, 8),
+                              color: Theme.of(context)
+                                  .iconTheme
+                                  .color
+                                  .withOpacity(0.1),
+                            ),
+                          ],
+                          color: Theme.of(context).appBarTheme.color,
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              message.message,
+                              textAlign: TextAlign.justify,
+                              style: Theme.of(context).textTheme.subtitle1,
+                            ),
+                            SizedBox(height: 6.0),
+                            Text(
+                              message.timestamp.toString(),
+                              style: TextStyle(
+                                fontSize: 8.0,
+                                color: Theme.of(context).iconTheme.color,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      padding: EdgeInsets.symmetric(
-                        vertical: 12.0,
-                        horizontal: 12.0,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).accentColor,
-                        borderRadius: BorderRadius.circular(24.0),
-                      ),
-                      child: Text(message.message),
                     ),
+                    SizedBox(width: 8.0),
                     CircleAvatar(
                       backgroundImage: NetworkImage(currentUser.photoUrl),
-                      radius: 24.0,
+                      radius: 18.0,
                     ),
                   ],
-                ),
-                Container(
-                  margin: EdgeInsets.only(right: 58.0),
-                  child: Text(message.timestamp.toString()),
                 ),
               ],
             ),

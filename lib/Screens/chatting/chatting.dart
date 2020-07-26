@@ -72,9 +72,16 @@ class _ChattingState extends State<Chatting> {
   messageSendBar() {
     final currentUser = Provider.of<User>(context);
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+      margin: EdgeInsets.all(8.0),
       decoration: BoxDecoration(
-        color: Theme.of(context).accentColor,
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 12,
+            offset: Offset(0, 8),
+            color: Theme.of(context).iconTheme.color.withOpacity(0.1),
+          ),
+        ],
+        color: Theme.of(context).appBarTheme.color,
         borderRadius: BorderRadius.circular(24.0),
       ),
       child: Row(
@@ -87,24 +94,13 @@ class _ChattingState extends State<Chatting> {
           // ),
           Expanded(
             child: TextFormField(
-              initialValue: null,
+              scrollPadding: EdgeInsets.symmetric(horizontal: 12.0),
               controller: textEditingController,
               decoration: InputDecoration(
-                hintText: 'Type Your Message ....',
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(24.0),
-                  borderSide: BorderSide(
-                    width: 1,
-                    color: Theme.of(context).accentColor,
-                  ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(24.0),
-                  borderSide: BorderSide(
-                    width: 1,
-                    color: Theme.of(context).accentColor,
-                  ),
-                ),
+                contentPadding: EdgeInsets.symmetric(horizontal: 12.0),
+                hintText: 'Type Your Message ..',
+                enabledBorder: InputBorder.none,
+                focusedBorder: InputBorder.none,
               ),
             ),
           ),

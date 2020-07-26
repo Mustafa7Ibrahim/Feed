@@ -58,6 +58,7 @@ class _CommentsListState extends State<CommentsList> {
               );
             }
             return Container(
+              color: Theme.of(context).appBarTheme.color,
               margin: EdgeInsets.only(top: 110.0),
               child: ListView.builder(
                 controller: widget.scrollController,
@@ -76,7 +77,7 @@ class _CommentsListState extends State<CommentsList> {
   addnewComment() {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).appBarTheme.color,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20.0),
           topRight: Radius.circular(20.0),
@@ -94,7 +95,7 @@ class _CommentsListState extends State<CommentsList> {
                 child: Text(
                   'Comments',
                   style: TextStyle(
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).accentColor,
                     fontSize: 16.0,
                     fontWeight: FontWeight.bold,
                   ),
@@ -104,7 +105,7 @@ class _CommentsListState extends State<CommentsList> {
                 margin: EdgeInsets.all(8.0),
                 child: Icon(
                   Icons.keyboard_arrow_up,
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).accentColor,
                 ),
               ),
             ],
@@ -120,7 +121,6 @@ class _CommentsListState extends State<CommentsList> {
                   child: Container(
                     height: 55.0,
                     child: TextFormField(
-                      initialValue: null,
                       autofocus: widget.focus,
                       keyboardType: TextInputType.multiline,
                       onChanged: (input) => setState(() => newComment = input),
@@ -129,14 +129,14 @@ class _CommentsListState extends State<CommentsList> {
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0),
                           borderSide: BorderSide(
-                            color: Theme.of(context).primaryColor,
+                            color: Theme.of(context).accentColor,
                             width: 2,
                           ),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0),
                           borderSide: BorderSide(
-                            color: Theme.of(context).primaryColor,
+                            color: Theme.of(context).accentColor,
                             width: 2,
                           ),
                         ),
@@ -152,7 +152,7 @@ class _CommentsListState extends State<CommentsList> {
                   margin: EdgeInsets.only(left: 4.0, right: 3.0),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20.0),
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).accentColor,
                   ),
                   child: IconButton(
                     icon: showLoading == false
