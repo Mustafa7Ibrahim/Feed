@@ -10,7 +10,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  ScrollController scrollController = ScrollController();
   Auth auth = Auth();
 
   @override

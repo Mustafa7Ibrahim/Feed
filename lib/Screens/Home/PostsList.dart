@@ -6,8 +6,6 @@ import 'package:news_feed/models/Post.dart';
 import '../../models/Post.dart';
 
 class PostsList extends StatefulWidget {
-  final controller;
-  PostsList({this.controller});
   @override
   _PostsListState createState() => _PostsListState();
 }
@@ -27,7 +25,6 @@ class _PostsListState extends State<PostsList> {
                   ),
                 )
               : ListView.builder(
-                  controller: widget.controller,
                   itemCount: snapshot.data.length,
                   itemBuilder: (context, index) {
                     return PostTile(post: snapshot.data[index]);
