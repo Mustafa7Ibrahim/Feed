@@ -22,12 +22,11 @@ class Auth {
   Future<User> signInWithGoogleSignIn(BuildContext context) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     try {
-      final GoogleSignInAccount googleSignInAccount =
-          await googleSignIn.signIn().catchError(
-                (onError) => Fluttertoast.showToast(
-                  msg: 'Please Make sure that you have working internet.',
-                ),
-              );
+      final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn().catchError(
+            (onError) => Fluttertoast.showToast(
+              msg: 'Please Make sure that you have working internet.',
+            ),
+          );
       final GoogleSignInAuthentication googleSignInAuthentication =
           await googleSignInAccount.authentication;
 
@@ -36,8 +35,7 @@ class Auth {
         idToken: googleSignInAuthentication.idToken,
       );
 
-      final AuthResult authResult =
-          await _auth.signInWithCredential(credential);
+      final AuthResult authResult = await _auth.signInWithCredential(credential);
 
       final FirebaseUser user = authResult.user;
 
@@ -66,7 +64,7 @@ class Auth {
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => Wrapper()),
+        MaterialPageRoute(builder: (context) => Wrapper(userId: currentUser.uid)),
       );
 
       return _user.getCurrentUser(currentUser);

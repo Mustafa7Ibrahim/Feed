@@ -12,6 +12,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var user = prefs.getString('user');
+  var userId = prefs.getString('userId');
   var theme = prefs.getBool('darkTheme');
   print(user);
   runApp(
@@ -21,15 +22,16 @@ Future<void> main() async {
             ? AppThemeProvider.lightTheme
             : AppThemeProvider.darkTheme,
       ),
-      child: Home(user: user),
+      child: Home(user: user, userId: userId),
     ),
   );
 }
 
 class Home extends StatelessWidget {
   final String user;
+  final String userId;
 
-  const Home({Key key, this.user}) : super(key: key);
+  const Home({Key key, this.user, this.userId}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<AppThemeProvider>(context);
@@ -38,7 +40,7 @@ class Home extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: theme.getTheme(),
-        home: user == null ? SignIn() : Wrapper(),
+        home: user == null ? SignIn() : Wrapper(userId: userId),
       ),
     );
   }

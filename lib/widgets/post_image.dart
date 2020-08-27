@@ -6,28 +6,26 @@ class PostImage extends StatelessWidget {
   PostImage({this.imageUrl});
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 250.0,
       width: double.infinity,
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(12.0)),
-      margin: EdgeInsets.symmetric(horizontal: 8.0),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(8.0),
-        child: Image.network(
-          imageUrl,
-          fit: BoxFit.cover,
-          loadingBuilder: (BuildContext context, Widget child,
-              ImageChunkEvent loadingProgress) {
-            return loadingProgress == null
-                ? child
-                : Center(
-                    child: SpinKitFoldingCube(
-                      color: Theme.of(context).primaryColor,
-                      size: 18.0,
-                    ),
-                  );
-          },
-        ),
+      child: Image.network(
+        imageUrl,
+        fit: BoxFit.cover,
+        loadingBuilder: (
+          BuildContext context,
+          Widget child,
+          ImageChunkEvent loadingProgress,
+        ) {
+          return loadingProgress == null
+              ? child
+              : Center(
+                  child: SpinKitFoldingCube(
+                    color: Theme.of(context).primaryColor,
+                    size: 18.0,
+                  ),
+                );
+        },
       ),
     );
   }

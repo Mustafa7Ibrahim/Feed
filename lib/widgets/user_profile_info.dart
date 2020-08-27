@@ -1,36 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:news_feed/Screens/userProfile/userProfilePosts.dart';
-import 'package:news_feed/models/Post.dart';
-import 'package:news_feed/models/User.dart';
-import 'package:provider/provider.dart';
 
-class UserProfile extends StatefulWidget {
-  @override
-  _UserProfileState createState() => _UserProfileState();
-}
+import '../models/User.dart';
 
-class _UserProfileState extends State<UserProfile> {
-  ScrollController controller = ScrollController();
+class UserProfileInfo extends StatelessWidget {
+  const UserProfileInfo({@required this.user});
+
+  final User user;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: ListView(
-          controller: controller,
-          children: <Widget>[
-            userInfo(context),
-            userPosts(context),
-          ],
-        ),
-      ),
-    );
-  }
-
-  userInfo(BuildContext context) {
-    final user = Provider.of<User>(context) ?? null;
     return Column(
       children: <Widget>[
         SizedBox(height: 18.0),
@@ -40,8 +19,7 @@ class _UserProfileState extends State<UserProfile> {
             width: 75.0,
             child: CircleAvatar(
               backgroundImage: NetworkImage(
-                user?.photoUrl ??
-                    'https://fakeimg.pl/350x200/?text=World&font=lobster',
+                user?.photoUrl ?? 'https://fakeimg.pl/350x200/?text=World&font=lobster',
               ),
               radius: 24.0,
             ),
@@ -97,33 +75,6 @@ class _UserProfileState extends State<UserProfile> {
           ],
         ),
       ],
-    );
-  }
-
-  userPosts(BuildContext context) {
-    final user = Provider.of<User>(context);
-    return StreamBuilder(
-      stream: Post().getPosts,
-      builder: (context, snapshot) {
-        return snapshot.hasData
-            ? ListView.builder(
-                controller: controller,
-                shrinkWrap: true,
-                itemCount: snapshot.data.length,
-                itemBuilder: (context, index) {
-                  return UserProfilePosts(
-                    post: snapshot.data[index],
-                    user: user,
-                  );
-                },
-              )
-            : Center(
-                child: SpinKitFoldingCube(
-                  color: Theme.of(context).primaryColor,
-                  size: 24.0,
-                ),
-              );
-      },
     );
   }
 }

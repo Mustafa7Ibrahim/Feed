@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:news_feed/Screens/Home/PostTile.dart';
+import 'package:news_feed/widgets/PostTile.dart';
 import 'package:news_feed/models/Post.dart';
 
 import '../../models/Post.dart';

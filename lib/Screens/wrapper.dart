@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../Screens/AddNewPost/AddNewPost.dart';
 import 'Home/Home.dart';
+import 'Profile/profile.dart';
 import 'chat/chat.dart';
-import 'userProfile/userProfile.dart';
 
 class Wrapper extends StatefulWidget {
+  final String userId;
+
+  Wrapper({@required this.userId});
   @override
   _WrapperState createState() => _WrapperState();
 }
@@ -13,15 +16,14 @@ class Wrapper extends StatefulWidget {
 class _WrapperState extends State<Wrapper> {
   int _selectedIndex = 0;
 
-  List<Widget> _widgetOptions = <Widget>[
-    Home(),
-    Chat(),
-    AddNewPost(),
-    UserProfile(),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    List<Widget> _widgetOptions = <Widget>[
+      Home(),
+      Chat(),
+      AddNewPost(),
+      Profile(postUserId: widget.userId, currentUser: true),
+    ];
     return Scaffold(
       body: IndexedStack(
         index: _selectedIndex,

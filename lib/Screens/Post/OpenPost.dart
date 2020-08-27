@@ -72,11 +72,10 @@ class _OpenPostState extends State<OpenPost> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => Profile(postUserId: widget.post.ownerId),
+            builder: (context) => Profile(postUserId: widget.post.ownerId, currentUser: false),
           ),
         );
       },
-      
     );
   }
 
@@ -88,8 +87,7 @@ class _OpenPostState extends State<OpenPost> {
             flex: 1,
             child: IconButton(
               icon: Icon(FontAwesomeIcons.thumbsUp),
-              onPressed: () {
-              },
+              onPressed: () {},
             ),
           ),
           Expanded(
