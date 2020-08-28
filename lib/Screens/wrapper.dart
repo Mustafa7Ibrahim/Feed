@@ -30,6 +30,7 @@ class _WrapperState extends State<Wrapper> {
         children: _widgetOptions,
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Theme.of(context).appBarTheme.color,
         showUnselectedLabels: false,
         showSelectedLabels: false,
         iconSize: 24.0,

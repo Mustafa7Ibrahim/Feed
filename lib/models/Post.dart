@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:date_format/date_format.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
 import 'package:news_feed/Constant/constant.dart';
 
 class Post {
@@ -12,11 +12,8 @@ class Post {
   final String timeStamp;
   final postId;
 
-  String _dateTime = formatDate(
-    DateTime.now(),
-    [yyyy, '-', mm, '-', dd, ' ', HH, ':', nn],
-  );
-  
+  String formattedDate = DateFormat().add_yMEd().add_jm().format(DateTime.now());
+
   Post({
     this.ownerId,
     this.userName,
@@ -34,7 +31,7 @@ class Post {
       'userName': user.displayName,
       'description': description,
       'mediaUrl': mediaUrl,
-      'timeStamp': _dateTime.toString(),
+      'timeStamp': formattedDate,
       'userProfileImg': user.photoUrl,
     });
   }
@@ -54,9 +51,6 @@ class Post {
   }
 
   Stream<List<Post>> get getPosts {
-    return postCollection
-        .orderBy('timeStamp', descending: true)
-        .snapshots()
-        .map(postsList);
+    return postCollection.orderBy('timeStamp', descending: true).snapshots().map(postsList);
   }
 }

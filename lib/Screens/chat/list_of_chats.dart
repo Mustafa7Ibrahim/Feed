@@ -27,6 +27,7 @@ class _ListOfChatsState extends State<ListOfChats> {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Theme.of(context).appBarTheme.color,
       child: ListTile(
           title: Text(widget.user.name),
           subtitle: Text(widget.user.email),

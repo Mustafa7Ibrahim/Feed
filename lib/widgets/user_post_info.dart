@@ -9,18 +9,26 @@ class UserPostInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: CircleAvatar(backgroundImage: NetworkImage(post.userProfileImg)),
-      title: Text(post.userName),
-      subtitle: Text(post.timeStamp),
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Profile(postUserId: post.ownerId, currentUser: false),
+    return Column(
+      children: [
+        SizedBox(height: 12.0),
+        Container(
+          color: Theme.of(context).appBarTheme.color,
+          child: ListTile(
+            leading: CircleAvatar(backgroundImage: NetworkImage(post.userProfileImg)),
+            title: Text(post.userName),
+            subtitle: Text(post.timeStamp),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Profile(postUserId: post.ownerId, currentUser: false),
+                ),
+              );
+            },
           ),
-        );
-      },
+        ),
+      ],
     );
   }
 }

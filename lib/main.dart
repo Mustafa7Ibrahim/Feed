@@ -14,7 +14,6 @@ Future<void> main() async {
   var user = prefs.getString('user');
   var userId = prefs.getString('userId');
   var theme = prefs.getBool('darkTheme');
-  print(user);
   runApp(
     ChangeNotifierProvider<AppThemeProvider>(
       create: (context) => AppThemeProvider(

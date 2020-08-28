@@ -20,11 +20,13 @@ dependencies:
   provider: ^4.0.4
   fluttertoast: ^4.0.1
   image_picker: ^0.6.3+4
-  date_format: ^1.0.8
   font_awesome_flutter: ^8.7.0
   shared_preferences: ^0.5.6+3
   flutter_spinkit: ^4.1.2
-  google_nav_bar: ^2.1.0
+  audio_recorder: ^1.0.2
+  audioplayers: ^0.16.0
+  intl: ^0.16.1
+  permission_handler: ^5.0.1+1
 
 
 dev_dependencies:

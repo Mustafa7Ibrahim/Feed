@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:date_format/date_format.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
 import 'package:news_feed/Constant/constant.dart';
 
 class Comment {
@@ -18,21 +18,16 @@ class Comment {
     this.postUid,
   });
 
-  String _dateTime =
-      formatDate(DateTime.now(), [yyyy, '-', mm, '-', dd, ' ', nn, ':', ss]);
+  String formattedDate = DateFormat().add_yMEd().add_jm().format(DateTime.now());
 
   Future addNewComment({String comment, String postId}) async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
-    return await postCollection
-        .document(postId)
-        .collection('comments')
-        .document()
-        .setData({
+    return await postCollection.document(postId).collection('comments').document().setData({
       'postId': postId,
       'comment': comment,
       'userName': user.displayName,
       'userImageUrl': user.photoUrl,
-      'timeStamp': _dateTime,
+      'timeStamp': formattedDate,
     });
   }
 

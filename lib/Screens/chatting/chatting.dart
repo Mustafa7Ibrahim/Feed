@@ -1,9 +1,16 @@
+import 'dart:async';
+
+import 'package:audio_recorder/audio_recorder.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 import 'package:news_feed/Constant/constant.dart';
 import 'package:news_feed/Screens/chatting/list_chat.dart';
 import 'package:news_feed/models/User.dart';
 import 'package:news_feed/models/message.dart';
+import 'package:news_feed/services/permission.dart';
+import 'package:news_feed/services/record_services.dart';
 import 'package:provider/provider.dart';
 
 class Chatting extends StatefulWidget {
@@ -17,10 +24,37 @@ class Chatting extends StatefulWidget {
 }
 
 class _ChattingState extends State<Chatting> {
+  RecordServices _recordServices = RecordServices();
   Message message = Message();
 
   final TextEditingController textEditingController = TextEditingController();
   final ScrollController scrollController = ScrollController();
+
+  bool recording = false;
+  bool sending = false;
+
+  String _timeString;
+  Timer t;
+
+  @override
+  void initState() {
+    _timeString = DateFormat('yyyy-MM-dd  HH:mm:ss').format(DateTime.now());
+    t = Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime());
+    super.initState();
+  }
+
+  void _getTime() {
+    final String formattedDateTime = DateFormat().add_yMd().add_jms().format(DateTime.now());
+    setState(() {
+      _timeString = formattedDateTime;
+    });
+  }
+
+  @override
+  void dispose() {
+    t.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +75,12 @@ class _ChattingState extends State<Chatting> {
           return !snapshot.hasData
               ? Column(
                   children: <Widget>[
-                    Expanded(child: Container()),
+                    Expanded(
+                      child: SpinKitFoldingCube(
+                        color: Theme.of(context).primaryColor,
+                        size: 18.0,
+                      ),
+                    ),
                     messageSendBar(),
                   ],
                 )
@@ -60,8 +99,13 @@ class _ChattingState extends State<Chatting> {
                         controller: scrollController,
                       ),
                     ),
+                    sending == true
+                        ? Text(
+                            'Sending..',
+                            style: TextStyle(color: Colors.red),
+                          )
+                        : Container(),
                     messageSendBar(),
-                    // messageSendBar(),
                   ],
                 );
         },
@@ -86,12 +130,58 @@ class _ChattingState extends State<Chatting> {
       ),
       child: Row(
         children: <Widget>[
-          // IconButton(
-          //   icon: Icon(Icons.add_photo_alternate),
-          //   onPressed: () {
-          //     //send photo
-          //   },
-          // ),
+          GestureDetector(
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Icon(
+                Icons.mic,
+                color: recording == true ? Colors.greenAccent : Theme.of(context).iconTheme.color,
+              ),
+            ),
+            onLongPress: () async {
+              if (await AudioRecorder.hasPermissions) {
+                _recordServices
+                    .startRecording(_timeString)
+                    .whenComplete(() => setState(() => recording = true));
+              } else {
+                await Permissions().askForAppPermissions();
+              }
+            },
+            onLongPressEnd: (details) async {
+              if (await AudioRecorder.hasPermissions) {
+                setState(
+                  () => setState(() {
+                    recording = false;
+                    sending = true;
+                  }),
+                );
+                _recordServices.stopRecording().then(
+                      (record) => _recordServices
+                          .uploadRecord(
+                            chatId: widget.chatId,
+                            recordingFile: record,
+                            time: _timeString,
+                          )
+                          .then(
+                            (url) => message.sendMessage(
+                              chatId: widget.chatId,
+                              userId: currentUser.userId,
+                              friendImg: currentUser.photoUrl,
+                              message: url,
+                              type: 'record',
+                              time: _timeString,
+                            ),
+                          )
+                          .whenComplete(
+                            () => setState(() {
+                              recording = false;
+                              sending = false;
+                            }),
+                          ),
+                    );
+              }
+            },
+          ),
           Expanded(
             child: TextFormField(
               scrollPadding: EdgeInsets.symmetric(horizontal: 12.0),
@@ -113,10 +203,10 @@ class _ChattingState extends State<Chatting> {
                   userId: currentUser.userId,
                   friendImg: currentUser.photoUrl,
                   message: textEditingController.text,
+                  type: 'message',
+                  time: _timeString,
                 );
-
                 textEditingController.clear();
-
                 scrollController.animateTo(
                   0.0,
                   duration: Duration(milliseconds: 300),

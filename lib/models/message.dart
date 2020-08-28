@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:date_format/date_format.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:news_feed/Constant/constant.dart';
 
@@ -10,13 +9,10 @@ class Message {
   final String message;
   final String timestamp;
   final String friendImg;
-
-  String _dateTime = formatDate(
-    DateTime.now(),
-    [yyyy, '-', mm, '-', dd, ' ', HH, ':', nn],
-  );
+  final String type;
 
   Message({
+    this.type,
     this.id,
     this.userId,
     this.friendId,
@@ -30,18 +26,17 @@ class Message {
     String userId,
     String friendImg,
     String chatId,
+    String type,
+    String time,
   }) async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
-    return await chatCollection
-        .document(chatId)
-        .collection('messages')
-        .document()
-        .setData({
+    return await chatCollection.document(chatId).collection('messages').document().setData({
       'userId': user.uid,
       'friendId': userId,
       'message': message,
-      'timestamp': _dateTime.toString(),
+      'timestamp': time,
       'friendImg': friendImg,
+      'type': type,
     });
   }
 
@@ -54,6 +49,7 @@ class Message {
         message: mess.data['message'],
         friendImg: mess.data['friendImg'],
         timestamp: mess.data['timestamp'],
+        type: mess.data['type'],
       );
     }).toList();
   }
