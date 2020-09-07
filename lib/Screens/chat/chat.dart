@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:news_feed/Screens/chat/list_of_chats.dart';
-import 'package:news_feed/models/User.dart';
+import 'package:news_feed/models/user_model.dart';
 import 'package:provider/provider.dart';
 
 class Chat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final currentUser = Provider.of<User>(context);
+    final currentUser = Provider.of<UserModel>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('People'),
         centerTitle: true,
       ),
       body: Container(
-        child: StreamBuilder<List<User>>(
-            stream: User().listOfUsers,
+        child: StreamBuilder<List<UserModel>>(
+            stream: UserModel().listOfUsers,
             builder: (context, snapshot) {
               return snapshot.hasData
                   ? ListView.builder(

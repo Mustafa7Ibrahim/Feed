@@ -27,7 +27,7 @@ class Permissions {
     return statuses;
   }
 
-  Future<void> requestPermission(Permission permission) async {
-    final status = await permission.request();
-  }
+  // Future<void> requestPermission(Permission permission) async {
+  //   final status = await permission.request();
+  // }
 }

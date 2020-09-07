@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:news_feed/Screens/Post/OpenPost.dart';
-import 'package:news_feed/models/Post.dart';
+import 'package:news_feed/models/post_model.dart';
+import 'package:news_feed/screens/post/open_post.dart';
 import 'package:news_feed/widgets/post_image.dart';
 import 'package:news_feed/widgets/user_post_info.dart';
 
-import '../models/User.dart';
+import '../models/user_model.dart';
 
 class PostTile extends StatelessWidget {
-  final Post post;
+  final PostModel post;
   final bool focus;
-  final User user;
+  final UserModel user;
   PostTile({this.post, this.focus, this.user});
 
   @override

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:news_feed/Auth/Auth.dart';
+import 'package:news_feed/Auth/auth.dart';
 
 class SignIn extends StatefulWidget {
   @override

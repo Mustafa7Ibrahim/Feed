@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:news_feed/Constant/constant.dart';
 
-class Message {
+class MessageModel {
   final String id;
   final String userId;
   final String friendId;
@@ -11,7 +11,7 @@ class Message {
   final String friendImg;
   final String type;
 
-  Message({
+  MessageModel({
     this.type,
     this.id,
     this.userId,
@@ -29,8 +29,8 @@ class Message {
     String type,
     String time,
   }) async {
-    FirebaseUser user = await FirebaseAuth.instance.currentUser();
-    return await chatCollection.document(chatId).collection('messages').document().setData({
+    User user = FirebaseAuth.instance.currentUser;
+    return await chatCollection.doc(chatId).collection('messages').doc().set({
       'userId': user.uid,
       'friendId': userId,
       'message': message,
@@ -40,16 +40,16 @@ class Message {
     });
   }
 
-  List<Message> messageList(QuerySnapshot snapshot) {
-    return snapshot.documents.map((mess) {
-      return Message(
-        id: mess.documentID,
-        userId: mess.data['userId'],
-        friendId: mess.data['friendId'],
-        message: mess.data['message'],
-        friendImg: mess.data['friendImg'],
-        timestamp: mess.data['timestamp'],
-        type: mess.data['type'],
+  List<MessageModel> messageList(QuerySnapshot snapshot) {
+    return snapshot.docs.map((mess) {
+      return MessageModel(
+        id: mess.id,
+        userId: mess.data()['userId'],
+        friendId: mess.data()['friendId'],
+        message: mess.data()['message'],
+        friendImg: mess.data()['friendImg'],
+        timestamp: mess.data()['timestamp'],
+        type: mess.data()['type'],
       );
     }).toList();
   }

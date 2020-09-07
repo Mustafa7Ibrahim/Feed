@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:news_feed/models/Comment.dart';
+import 'package:news_feed/models/comment_model.dart';
 
 class CommentCard extends StatelessWidget {
-  final Comment comment;
+  final CommentModel comment;
   CommentCard({this.comment});
 
   @override

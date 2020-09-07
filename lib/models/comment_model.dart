@@ -3,14 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import 'package:news_feed/Constant/constant.dart';
 
-class Comment {
+class CommentModel {
   final String name;
   final String comment;
   final String postUid;
   final String timeStamp;
   final String userImageUrl;
 
-  Comment({
+  CommentModel({
     this.name,
     this.comment,
     this.timeStamp,
@@ -21,24 +21,24 @@ class Comment {
   String formattedDate = DateFormat().add_yMEd().add_jm().format(DateTime.now());
 
   Future addNewComment({String comment, String postId}) async {
-    FirebaseUser user = await FirebaseAuth.instance.currentUser();
-    return await postCollection.document(postId).collection('comments').document().setData({
+    User user = FirebaseAuth.instance.currentUser;
+    return await postCollection.doc(postId).collection('comments').doc().set({
       'postId': postId,
       'comment': comment,
       'userName': user.displayName,
-      'userImageUrl': user.photoUrl,
+      'userImageUrl': user.photoURL,
       'timeStamp': formattedDate,
     });
   }
 
-  List<Comment> commentsList(QuerySnapshot snapshot) {
-    return snapshot.documents.map((com) {
-      return Comment(
-        name: com.data['userName'],
-        postUid: com.data['postId'],
-        comment: com.data['comment'],
-        timeStamp: com.data['timeStamp'] ?? '',
-        userImageUrl: com.data['userImageUrl'],
+  List<CommentModel> commentsList(QuerySnapshot snapshot) {
+    return snapshot.docs.map((com) {
+      return CommentModel(
+        name: com.data()['userName'],
+        postUid: com.data()['postId'],
+        comment: com.data()['comment'],
+        timeStamp: com.data()['timeStamp'] ?? '',
+        userImageUrl: com.data()['userImageUrl'],
       );
     }).toList();
   }

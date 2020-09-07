@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../Screens/AddNewPost/AddNewPost.dart';
 import 'Home/Home.dart';
 import 'Profile/profile.dart';
+import 'add_new_post/add_new_post.dart';
 import 'chat/chat.dart';
 
 class Wrapper extends StatefulWidget {

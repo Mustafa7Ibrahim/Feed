@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:news_feed/Screens/chatting/chatting.dart';
-import 'package:news_feed/models/User.dart';
+import 'package:news_feed/models/user_model.dart';
 
 class ListOfChats extends StatefulWidget {
-  final User currentUser;
-  final User user;
+  final UserModel currentUser;
+  final UserModel user;
   ListOfChats({this.user, this.currentUser});
 
   @override

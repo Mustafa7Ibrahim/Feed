@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../models/User.dart';
+import '../models/user_model.dart';
 
 class UserProfileInfo extends StatelessWidget {
   const UserProfileInfo({@required this.user});
 
-  final User user;
+  final UserModel user;
 
   @override
   Widget build(BuildContext context) {

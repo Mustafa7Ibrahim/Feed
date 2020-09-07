@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:news_feed/models/User.dart';
-import 'package:news_feed/models/message.dart';
+import 'package:news_feed/models/user_model.dart';
+import 'package:news_feed/models/message_model.dart';
 import 'package:news_feed/widgets/record_messages/player.dart';
 import 'package:provider/provider.dart';
 
 class ListChat extends StatelessWidget {
-  final Message message;
-  final User friend;
+  final MessageModel message;
+  final UserModel friend;
   ListChat({this.message, this.friend});
 
   @override
   Widget build(BuildContext context) {
-    final currentUser = Provider.of<User>(context);
+    final currentUser = Provider.of<UserModel>(context);
     return message.userId == currentUser.userId
         ? message.type == 'record'
             ? buildCurrentUserRecordMessage(context)

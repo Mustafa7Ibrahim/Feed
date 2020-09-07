@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:news_feed/Constant/constant.dart';
-import 'package:news_feed/models/Post.dart';
-import 'package:news_feed/models/User.dart';
+import 'package:news_feed/models/post_model.dart';
+import 'package:news_feed/models/user_model.dart';
+import 'package:news_feed/widgets/post_tile.dart';
 import 'package:news_feed/widgets/user_profile_info.dart';
-
-import '../../widgets/PostTile.dart';
 
 class Profile extends StatefulWidget {
   final String postUserId;
@@ -18,11 +17,11 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   ScrollController controller = ScrollController();
-  User user = User();
+  UserModel user = UserModel();
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: userCollection.document(widget.postUserId).snapshots().map(user.getUserData),
+      stream: userCollection.doc(widget.postUserId).snapshots().map(user.getUserData),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Scaffold(
@@ -46,9 +45,9 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  userPosts(BuildContext context, User user) {
+  userPosts(BuildContext context, UserModel user) {
     return StreamBuilder(
-      stream: Post().getPosts,
+      stream: PostModel().getPosts,
       builder: (context, snapshot) {
         return snapshot.hasData
             ? ListView.builder(

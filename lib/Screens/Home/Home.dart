@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:news_feed/Auth/Auth.dart';
-import 'package:news_feed/Screens/Home/PostsList.dart';
+import 'package:news_feed/Auth/auth.dart';
+import 'package:news_feed/screens/home/posts_list.dart';
 import 'package:news_feed/Screens/Settings/Settings.dart';
-import 'package:news_feed/models/PopUpMenu.dart';
+import 'package:news_feed/models/pop_up_menu.dart';
 
 class Home extends StatefulWidget {
   @override

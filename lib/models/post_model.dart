@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import 'package:news_feed/Constant/constant.dart';
 
-class Post {
+class PostModel {
   final String ownerId;
   final String userName;
   final String description;
@@ -14,7 +14,7 @@ class Post {
 
   String formattedDate = DateFormat().add_yMEd().add_jm().format(DateTime.now());
 
-  Post({
+  PostModel({
     this.ownerId,
     this.userName,
     this.description,
@@ -25,32 +25,32 @@ class Post {
   });
 
   Future addNewPost({String description, String mediaUrl}) async {
-    FirebaseUser user = await FirebaseAuth.instance.currentUser();
-    return await postCollection.document().setData({
+    User user = FirebaseAuth.instance.currentUser;
+    return await postCollection.doc().set({
       'ownerId': user.uid,
       'userName': user.displayName,
       'description': description,
       'mediaUrl': mediaUrl,
       'timeStamp': formattedDate,
-      'userProfileImg': user.photoUrl,
+      'userProfileImg': user.photoURL,
     });
   }
 
-  List<Post> postsList(QuerySnapshot snapshot) {
-    return snapshot.documents.map((doc) {
-      return Post(
-        postId: doc.documentID,
-        ownerId: doc.data['ownerId'],
-        userName: doc.data['userName'],
-        description: doc.data['description'],
-        userProfileImg: doc.data['userProfileImg'],
-        mediaUrl: doc.data['mediaUrl'],
-        timeStamp: doc.data['timeStamp'],
+  List<PostModel> postsList(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      return PostModel(
+        postId: doc.id,
+        ownerId: doc.data()['ownerId'],
+        userName: doc.data()['userName'],
+        description: doc.data()['description'],
+        userProfileImg: doc.data()['userProfileImg'],
+        mediaUrl: doc.data()['mediaUrl'],
+        timeStamp: doc.data()['timeStamp'],
       );
     }).toList();
   }
 
-  Stream<List<Post>> get getPosts {
+  Stream<List<PostModel>> get getPosts {
     return postCollection.orderBy('timeStamp', descending: true).snapshots().map(postsList);
   }
 }

@@ -16,7 +16,7 @@ class Player extends StatefulWidget {
 
 class _PlayerState extends State<Player> {
   AudioPlayer _audioPlayer;
-  AudioPlayerState _audioPlayerState;
+  AudioPlayerState audioPlayerState;
   Duration _duration;
   Duration _position;
 
@@ -100,14 +100,14 @@ class _PlayerState extends State<Player> {
     _audioPlayer.onPlayerStateChanged.listen(
       (state) {
         if (!mounted) return;
-        setState(() => _audioPlayerState = state);
+        setState(() => audioPlayerState = state);
       },
     );
 
     _audioPlayer.onNotificationPlayerStateChanged.listen(
       (state) {
         if (!mounted) return;
-        setState(() => _audioPlayerState = state);
+        setState(() => audioPlayerState = state);
       },
     );
   }

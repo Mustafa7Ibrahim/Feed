@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:news_feed/Screens/Post/CommentsList.dart';
 import 'package:news_feed/Screens/Profile/profile.dart';
-import 'package:news_feed/models/Comment.dart';
-import 'package:news_feed/models/Post.dart';
+import 'package:news_feed/models/comment_model.dart';
+import 'package:news_feed/models/post_model.dart';
 import 'package:news_feed/widgets/post_image.dart';
+
+import 'comments_list.dart';
 
 class OpenPost extends StatefulWidget {
   final focus;
-  final Post post;
+  final PostModel post;
   OpenPost({this.post, this.focus});
 
   @override
@@ -16,7 +17,7 @@ class OpenPost extends StatefulWidget {
 }
 
 class _OpenPostState extends State<OpenPost> {
-  Comment comments = Comment();
+  CommentModel comments = CommentModel();
   bool showLoading = false;
   String comment;
 

@@ -1,14 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-final CollectionReference userCollection =
-    Firestore.instance.collection('users');
+final CollectionReference userCollection = FirebaseFirestore.instance.collection('users');
 
-// this is the post collection
-final CollectionReference postCollection =
-    Firestore.instance.collection('posts');
+final CollectionReference postCollection = FirebaseFirestore.instance.collection('posts');
 
-final CollectionReference commentsCollection =
-    Firestore.instance.collection('comments');
+final CollectionReference commentsCollection = FirebaseFirestore.instance.collection('comments');
 
-final CollectionReference chatCollection =
-    Firestore.instance.collection('Chat');
+final CollectionReference chatCollection = FirebaseFirestore.instance.collection('Chat');

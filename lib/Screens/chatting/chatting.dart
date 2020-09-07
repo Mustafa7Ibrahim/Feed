@@ -7,14 +7,14 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:news_feed/Constant/constant.dart';
 import 'package:news_feed/Screens/chatting/list_chat.dart';
-import 'package:news_feed/models/User.dart';
-import 'package:news_feed/models/message.dart';
+import 'package:news_feed/models/user_model.dart';
+import 'package:news_feed/models/message_model.dart';
 import 'package:news_feed/services/permission.dart';
 import 'package:news_feed/services/record_services.dart';
 import 'package:provider/provider.dart';
 
 class Chatting extends StatefulWidget {
-  final User freind;
+  final UserModel freind;
   final String chatId;
 
   Chatting({this.freind, this.chatId});
@@ -25,7 +25,7 @@ class Chatting extends StatefulWidget {
 
 class _ChattingState extends State<Chatting> {
   RecordServices _recordServices = RecordServices();
-  Message message = Message();
+  MessageModel message = MessageModel();
 
   final TextEditingController textEditingController = TextEditingController();
   final ScrollController scrollController = ScrollController();
@@ -63,9 +63,9 @@ class _ChattingState extends State<Chatting> {
         title: Text(widget.freind.name),
         centerTitle: true,
       ),
-      body: StreamBuilder<List<Message>>(
+      body: StreamBuilder<List<MessageModel>>(
         stream: chatCollection
-            .document(widget.chatId)
+            .doc(widget.chatId)
             .collection('messages')
             .orderBy('timestamp', descending: true)
             .limit(50)
@@ -114,7 +114,7 @@ class _ChattingState extends State<Chatting> {
   }
 
   messageSendBar() {
-    final currentUser = Provider.of<User>(context);
+    final currentUser = Provider.of<UserModel>(context);
     return Container(
       margin: EdgeInsets.all(8.0),
       decoration: BoxDecoration(

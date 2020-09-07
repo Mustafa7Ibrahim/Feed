@@ -3,23 +3,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:news_feed/Screens/SignIn/SignIn.dart';
 import 'package:news_feed/Screens/Wrapper.dart';
-import 'package:news_feed/models/User.dart';
+import 'package:news_feed/models/user_model.dart';
+import 'package:news_feed/screens/sign_in/sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth {
-  String name;
-  String email;
-  String imageUrl;
-  String id;
-
   // uid String
   final GoogleSignIn googleSignIn = GoogleSignIn();
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final User _user = User();
+  final UserModel _userModel = UserModel();
 
-  Future<User> signInWithGoogleSignIn(BuildContext context) async {
+  Future<UserModel> signInWithGoogleSignIn(BuildContext context) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     try {
       final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn().catchError(
@@ -30,34 +25,34 @@ class Auth {
       final GoogleSignInAuthentication googleSignInAuthentication =
           await googleSignInAccount.authentication;
 
-      final AuthCredential credential = GoogleAuthProvider.getCredential(
+      final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleSignInAuthentication.accessToken,
         idToken: googleSignInAuthentication.idToken,
       );
 
-      final AuthResult authResult = await _auth.signInWithCredential(credential);
+      final UserCredential _userCredential = await _auth.signInWithCredential(credential);
 
-      final FirebaseUser user = authResult.user;
+      final User _user = _userCredential.user;
 
-      assert(user.displayName != null);
-      assert(user.email != null);
-      assert(user.photoUrl != null);
+      assert(_user.displayName != null);
+      assert(_user.email != null);
+      assert(_user.photoURL != null);
 
-      final name = user.displayName;
-      final email = user.email;
-      final imageUrl = user.photoUrl;
-      final id = user.uid;
+      final name = _user.displayName;
+      final email = _user.email;
+      final imageUrl = _user.photoURL;
+      final id = _user.uid;
 
-      _user.addNewUser(id, name, email, imageUrl);
+      _userModel.addNewUser(id, name, email, imageUrl);
 
       print(name);
       print(email);
 
-      assert(!user.isAnonymous);
-      assert(await user.getIdToken() != null);
+      assert(!_user.isAnonymous);
+      assert(await _user.getIdToken() != null);
 
-      final FirebaseUser currentUser = await _auth.currentUser();
-      assert(user.uid == currentUser.uid);
+      final User currentUser = _auth.currentUser;
+      assert(_user.uid == currentUser.uid);
 
       preferences.setString('user', currentUser.displayName);
       preferences.setString('userId', currentUser.uid);
@@ -67,12 +62,12 @@ class Auth {
         MaterialPageRoute(builder: (context) => Wrapper(userId: currentUser.uid)),
       );
 
-      return _user.getCurrentUser(currentUser);
+      return _userModel.getCurrentUser(currentUser);
     } catch (e) {
       Fluttertoast.showToast(
         msg: 'Please Make sure that you have working internet.',
       );
-      return _user.getCurrentUser(null);
+      return _userModel.getCurrentUser(null);
     }
   }
 

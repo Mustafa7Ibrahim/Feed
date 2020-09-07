@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:news_feed/Screens/Post/CommentCard.dart';
-import 'package:news_feed/models/Comment.dart';
-import 'package:news_feed/models/Post.dart';
+import 'package:news_feed/models/comment_model.dart';
+import 'package:news_feed/models/post_model.dart';
 import 'package:news_feed/Constant/constant.dart';
+
+import 'comment_card.dart';
 
 class CommentsList extends StatefulWidget {
   final focus;
-  final Post thisPost;
+  final PostModel thisPost;
 
   final ScrollController scrollController;
 
@@ -24,7 +25,7 @@ class _CommentsListState extends State<CommentsList> {
 
   bool showLoading = false;
 
-  Comment comment = Comment();
+  CommentModel comment = CommentModel();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class _CommentsListState extends State<CommentsList> {
         addnewComment(),
         StreamBuilder(
           stream: postCollection
-              .document(widget.thisPost.postId)
+              .doc(widget.thisPost.postId)
               .collection('comments')
               .orderBy('timeStamp', descending: true)
               .snapshots()

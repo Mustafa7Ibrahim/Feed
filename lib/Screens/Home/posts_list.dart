@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:news_feed/widgets/PostTile.dart';
-import 'package:news_feed/models/Post.dart';
-
-import '../../models/Post.dart';
+import 'package:news_feed/models/post_model.dart';
+import 'package:news_feed/widgets/post_tile.dart';
+import '../../models/post_model.dart';
 
 class PostsList extends StatefulWidget {
   @override
@@ -13,8 +12,8 @@ class PostsList extends StatefulWidget {
 class _PostsListState extends State<PostsList> {
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<Post>>(
-      stream: Post().getPosts,
+    return StreamBuilder<List<PostModel>>(
+      stream: PostModel().getPosts,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         return Container(
           child: !snapshot.hasData

@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:news_feed/models/Post.dart';
-import 'package:news_feed/models/User.dart';
+import 'package:news_feed/models/post_model.dart';
+import 'package:news_feed/models/user_model.dart';
 import 'package:provider/provider.dart';
 
 class AddNewPost extends StatefulWidget {
@@ -15,7 +15,7 @@ class AddNewPost extends StatefulWidget {
 }
 
 class _AddNewPostState extends State<AddNewPost> {
-  final Post post = Post();
+  final PostModel post = PostModel();
 
   String newPost;
 
@@ -99,9 +99,7 @@ class _AddNewPostState extends State<AddNewPost> {
             setState(() => showLoadingPost = true);
             if (imageUrl != null) {
               await uploadImage().then((onComplet) async {
-                await post
-                    .addNewPost(description: newPost, mediaUrl: imageUrl)
-                    .then((onComplete) {
+                await post.addNewPost(description: newPost, mediaUrl: imageUrl).then((onComplete) {
                   print(imageUrl);
                   setState(() => showLoadingPost = false);
                   Fluttertoast.showToast(msg: 'Post add Successfuly.');
@@ -122,7 +120,7 @@ class _AddNewPostState extends State<AddNewPost> {
   }
 
   userInfo(BuildContext context) {
-    final _user = Provider.of<User>(context);
+    final _user = Provider.of<UserModel>(context);
 
     return Container(
       margin: EdgeInsets.all(16.0),
@@ -131,8 +129,7 @@ class _AddNewPostState extends State<AddNewPost> {
           CircleAvatar(
             radius: 16.0,
             backgroundImage: NetworkImage(
-              _user?.photoUrl ??
-                  'https://fakeimg.pl/350x200/?text=World&font=lobster',
+              _user?.photoUrl ?? 'https://fakeimg.pl/350x200/?text=World&font=lobster',
             ),
           ),
           SizedBox(width: 8.0),
