@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_feed/models/user_model.dart';
 import 'package:news_feed/models/message_model.dart';
-import 'package:news_feed/widgets/record_messages/player.dart';
+import 'package:news_feed/widgets/player.dart';
 import 'package:provider/provider.dart';
 
 class ListChat extends StatelessWidget {

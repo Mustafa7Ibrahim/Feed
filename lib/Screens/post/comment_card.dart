@@ -7,60 +7,51 @@ class CommentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Row(
       mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.all(12.0),
-              child: CircleAvatar(
-                backgroundImage: NetworkImage(comment.userImageUrl),
-                radius: 20.0,
-              ),
-            ),
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.all(12.0),
-                margin: EdgeInsets.only(top: 4.0, right: 12.0, bottom: 4.0),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).accentColor,
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          comment.name,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Spacer(),
-                      ],
-                    ),
-                    Text(
-                      comment.comment,
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
         Container(
-          margin: EdgeInsets.only(left: 66.0),
-          child: Text(comment.timeStamp),
+          margin: EdgeInsets.symmetric(horizontal: 12.0),
+          child: CircleAvatar(
+            backgroundImage: NetworkImage(comment.userImageUrl),
+            radius: 18.0,
+          ),
         ),
+        Flexible(
+          child: Container(
+            padding: EdgeInsets.all(12.0),
+            margin: EdgeInsets.only(right: 12.0, bottom: 12.0),
+            decoration: BoxDecoration(
+              color: Theme.of(context).appBarTheme.color,
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  comment.name,
+                  style: Theme.of(context).textTheme.caption,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Text(
+                    comment.comment,
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Text(
+                    comment.timeStamp,
+                    style: Theme.of(context).textTheme.caption,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        )
       ],
     );
   }

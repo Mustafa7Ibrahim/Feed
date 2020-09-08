@@ -11,9 +11,8 @@ class UserPostInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 12.0),
         Container(
-          color: Theme.of(context).appBarTheme.color,
+          color: Theme.of(context).scaffoldBackgroundColor,
           child: ListTile(
             leading: CircleAvatar(backgroundImage: NetworkImage(post.userProfileImg)),
             title: Text(post.userName),

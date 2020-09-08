@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
-import 'player_state.dart';
+import '../utilts/player_state.dart';
 
 class Player extends StatefulWidget {
   final String url;

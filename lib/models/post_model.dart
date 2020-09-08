@@ -10,7 +10,9 @@ class PostModel {
   final String mediaUrl;
   final String userProfileImg;
   final String timeStamp;
-  final postId;
+  final String postId;
+  final int likesNum;
+  final int commentsNum;
 
   String formattedDate = DateFormat().add_yMEd().add_jm().format(DateTime.now());
 
@@ -22,6 +24,8 @@ class PostModel {
     this.userProfileImg,
     this.timeStamp,
     this.postId,
+    this.likesNum,
+    this.commentsNum,
   });
 
   Future addNewPost({String description, String mediaUrl}) async {
@@ -33,6 +37,8 @@ class PostModel {
       'mediaUrl': mediaUrl,
       'timeStamp': formattedDate,
       'userProfileImg': user.photoURL,
+      'likesNumber': 0,
+      'commentsNumber': 0,
     });
   }
 
@@ -46,6 +52,8 @@ class PostModel {
         userProfileImg: doc.data()['userProfileImg'],
         mediaUrl: doc.data()['mediaUrl'],
         timeStamp: doc.data()['timeStamp'],
+        likesNum: doc.data()['likesNumber'],
+        commentsNum: doc.data()['commentsNumber'],
       );
     }).toList();
   }
